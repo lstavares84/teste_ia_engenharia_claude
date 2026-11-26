@@ -172,24 +172,27 @@ Chumbadores: 4 × M20 ASTM F1554 Gr.36 galvanizados, comprimento de ancoragem �
 ## 9. Fundação — radier (pré-dimensionamento, SEM SONDAGEM)
 
 
-Radier 6,30 × 5,40 × 0,40 m, concreto C30, sobre lastro de 5 cm e base compactada; topo na cota 112,00; pedestais 50×50 cm até 112,12. Cotas e área: ver desenhos DES-03/DES-04.
+Radier 6,50 × 5,40 × 0,40 m, concreto C30, sobre lastro de 5 cm e base compactada; topo na cota 112,00; pedestais 50×50 cm até 112,12. Cotas e área: ver desenhos DES-03/DES-04.
 
-- Peso do radier: `W = L·B·h·25` = **340,2 kN**
-- Carga total de serviço na base (água até a borda): `N = Wágua + Wcaixa + Waço + Wradier + Wped + plataforma` = **958,6 kN**
-- Pressão média no solo: `σ = N/A` = `958,6/34,02` = **28,2 kPa**
-- Pressão máxima com vento: `σ = N/A + M/W` = **30,3 kPa**
+- Peso do radier: `W = L·B·h·25` = **351,0 kN**
+- Carga total de serviço na base (água até a borda): `N = Wágua + Wcaixa + Waço + Wradier + Wped + plataforma` = **969,4 kN**
+- Pressão média no solo: `σ = N/A` = `969,4/35,10` = **27,6 kPa**
+- Pressão máxima com vento: `σ = N/A + M/W` = **29,6 kPa**
 - Comparação com σadm hipotético = 100 kPa [H — sem sondagem]: **0,30 -**  **OK**
-- Segurança ao tombamento global (caixa vazia): `FS = N·B/2 / Mt` = **14,1 -**  **OK**
-- Segurança ao deslizamento (tanφ = 0,45 [H]): `FS = 0,45·N/Fw` = **8,9 -**  **OK**
+- Segurança ao tombamento global (caixa vazia): `FS = N·B/2 / Mt` = **14,5 -**  **OK**
+- Segurança ao deslizamento (tanφ = 0,45 [H]): `FS = 0,45·N/Fw` = **9,2 -**  **OK**
 - Normal de cálculo no pilar central: **469,8 kN**
-- Força de punção (descontada reação do solo dentro de C'): `Fsd = Nd − σd·A_C'` = **389,9 kN**
-- Tensão solicitante no contorno C' (2d): `τSd = Fsd/(u·d)` = `u = 6,27 m; d = 0,34 m` = **0,183 MPa**
+- Força de punção (descontada reação do solo dentro de C'): `Fsd = Nd − σd·A_C'` = **392,4 kN**
+- Tensão solicitante no contorno C' (2d): `τSd = Fsd/(u·d)` = `u = 6,27 m; d = 0,34 m` = **0,184 MPa**
 - Tensão resistente sem armadura de punção (NBR 6118, 19.5): `τRd1 = 0,13(1+√(20/d))(100ρfck)^(1/3)` = `ρ = 0,185 %` = **0,407 MPa**  **OK**
-- Momento estático total por painel 2,2 m (método direto, reação uniforme): `M0 = q·l2·ln²/8` = **20,7 kN·m**
+- Momento estático total por painel 2,2 m (método direto, reação uniforme): `M0 = q·l2·ln²/8` = **20,1 kN·m**
 - Armadura mínima por face e direção (ρmin = 0,15 %): `As = 0,0015·b·h` = **6,00 cm²/m**
-- Armadura de flexão necessária na faixa dos pilares (estimativa): `As = 0,65·0,75·M0/l/(0,9·d·fyd)` = **0,35 cm²/m**
+- Armadura de flexão necessária na faixa dos pilares (estimativa): `As = 0,65·0,75·M0/l/(0,9·d·fyd)` = **0,33 cm²/m**
 
-Adotado (preliminar): malha Ø10 c/ 12,5 cm (6,28 cm²/m) nas duas faces e duas direções; arranques dos pedestais 4 Ø12,5 + estribos Ø6,3 c/ 15. Cobrimento 40 mm. A armadura mínima governa.
+Adotado (preliminar): malha Ø10 c/ 12,5 cm (6,28 cm²/m) nas duas faces e duas direções; arranques dos pedestais 4 Ø12,5 + estribos Ø6,3 c/ 15. Cobrimento 40 mm.
+
+
+**Revisão pela FEA-03 (radier sobre Winkler, `fea/`):** a estimativa simplificada acima (reação uniforme) SUBESTIMA o momento local sob o pilar central, que concentra ~45 % da carga. A placa de Mindlin sobre molas (k = 10–40 MN/m³) indica m* ≈ 73–86 kN·m/m (ELU) na face inferior sob esse pilar, contra MRd ≈ 86 kN·m/m da malha mínima (taxa 0,85–1,00). **Adotado reforço inferior adicional Ø12,5 c/ 12,5 cm nas duas direções numa região de 2,40 × 2,40 m centrada no pilar central** (As total ≈ 16 cm²/m ⇒ MRd ≈ 210 kN·m/m). Ver FEA.md.
 
 
 Alternativa avaliada: 9 sapatas isoladas ligadas por vigas-baldrame. Com σadm = 100 kPa a sapata do pilar central precisaria de ≈ 1,86 m de lado, e as de canto ≈ 0,8 m — carga muito desigual (central ≈ 30 % do total), com risco de recalque diferencial sob o deck que apoia a caixa. O radier foi preferido por uniformizar recalques e tolerar solo desconhecido; a escolha final depende da sondagem.

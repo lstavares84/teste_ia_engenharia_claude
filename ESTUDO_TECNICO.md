@@ -187,6 +187,14 @@
 | Potência hidráulica / eixo | 264 W / ~530 W (η = 0,50 [H]); motor de 0,75 a 1,1 kW |
 | Golpe de aríete (parada brusca) | a = 329 m/s; ΔH = 33,4 m; pressão máxima ~76 m, bem abaixo do PN16 (160 m) ✓; **onda negativa de até −6,6 m.c.a. na crista do talude** (risco de separação de coluna) |
 
+**Simulação do transiente (SIM-04, método das características com cavidade discreta de vapor):**
+- **Queda de energia**: a parada ocorre em ~0,3 s. A pressão cai até a de vapor (−8,9 m.c.a.) e **há separação de coluna** no trecho do talude. O colapso da cavidade leva a pressão a ~119 m.c.a. É menos que o PN 16 (160 m), mas muito acima da estimativa de Joukowsky (76 m). O modelo DVCM tende a exagerar esses picos.
+- **Parada pelo soft-starter (rampa de 5 s)**: pressão de −0,5 a +26 m.c.a., **sem cavitação**.
+- **Consequências:**
+  - a classe PN 16 (SDR 11) fica confirmada como necessária;
+  - no executivo, avaliar válvula de admissão e expulsão de ar na crista ou outra proteção;
+  - repetir a simulação com o perfil topográfico real em software de transientes.
+
 **Medidas contra transientes:**
 - soft-starter com rampa de parada de 5 s ou mais (ΔH ≈ 4,7 m nas paradas normais);
 - retenção de mola junto à bomba;
@@ -366,16 +374,16 @@ Aço ASTM A572 Gr50, galvanizado a fogo. Massa ~**4,1 t**.
 
 ### 8.3 Fundação (preliminar, sem sondagem)
 
-**Radier 6,30 × 5,40 × 0,40 m em C30**, sobre lastro e base compactada, com topo em 112,00 e 12 pedestais de 50×50 cm.
+**Radier 6,50 × 5,40 × 0,40 m em C30**, sobre lastro e base compactada, com topo em 112,00 e 12 pedestais de 50×50 cm (+2 pedestais menores do patamar). O comprimento passou de 6,30 para 6,50 m porque a modelagem FEA mostrou que os pedestais do patamar ficavam parcialmente fora do radier.
 
 | Verificação | Valor |
 |---|---|
-| Carga de serviço | 959 kN |
+| Carga de serviço | 969 kN |
 | Pressão média / máxima | **28 / 30 kPa** (0,30 do σadm hipotético de 100 kPa) |
 | Tombamento e deslizamento com a caixa vazia | FS 14 e 8,9 |
 | Punção no pilar central | τSd 0,18 MPa ≤ τRd1 0,41 MPa (NBR 6118, sem armadura de punção) |
-| Armadura | **mínima governa**: Ø10 c/12,5 nas duas faces e duas direções (~0,75 t de CA-50 com transpasses) |
-| Concreto | ~13,6 m³ de radier + 0,4 m³ de pedestais + 1,7 m³ de lastro |
+| Armadura | Malha Ø10 c/12,5 nas duas faces e duas direções **+ reforço inferior Ø12,5 c/12,5 (2,40 × 2,40 m) sob o pilar central**, exigido pela FEA-03 (~0,85 t de CA-50 com transpasses) |
+| Concreto | ~14,0 m³ de radier + 0,4 m³ de pedestais + 1,8 m³ de lastro |
 
 **Dados geotécnicos necessários antes do executivo:**
 - SPT com N por metro e nível d'água;
@@ -386,9 +394,18 @@ Aço ASTM A572 Gr50, galvanizado a fogo. Massa ~**4,1 t**.
 
 **As dimensões acima não estão liberadas para construção.**
 
+### 8.5 Verificação por elementos finitos (pasta `fea/`, detalhes em `fea/resultados/FEA.md`)
+
+| Modelo | Resultado principal | Comparação com o cálculo manual |
+|---|---|---|
+| FEA-01: pórtico espacial (284 nós, 325 elementos, diagonais só-tração) | Taxa máxima 0,81 (viga principal); flechas 3,1 mm (secundárias) e 1,8 mm (principais); equilíbrio com erro < 1e-8 kN | O modelo 1D dava taxa 0,92. O pilar central recebe 258 kN de água no 3D contra 298 kN no 1D, porque o 1D supõe apoios rígidos e é conservador |
+| FEA-01: análise modal | 1º modo 2,62 Hz (lateral Y), maior que 1 Hz: não há efeito dinâmico relevante de vento. Sloshing da água: 0,48 Hz | Os pilares de canto e os postes da plataforma podem ficar levemente tracionados: chumbadores necessários |
+| FEA-02: chapa 9,5 mm (Mindlin Q4) | Flecha 0,78 mm (limite 1,76 mm); σ = 74 MPa (limite 227 MPa) | A verificação manual biapoiada (1,53 mm) era conservadora |
+| FEA-03: radier sobre Winkler (k_s = 10/20/40 MN/m³) | Recalque 1,0–3,3 mm; distorção angular ≤ 1/2.700; pressão no solo 8–40 kPa; m* = 73–86 kN·m/m sob o pilar central | **Achado:** o método simplificado subestimava o momento sob o pilar central. A taxa da malha mínima chegou a 0,85–1,00, o que levou ao reforço adotado acima |
+
 ### 8.4 Área de 8 × 8 m: suficiente?
 
-- **Cabem:** radier (6,30 × 5,40), estrutura, plataforma e escada, com circulação de 0,9 m a oeste e 1,3 m ao sul.
+- **Cabem:** radier (6,50 × 5,40), estrutura, plataforma e escada, com circulação de 0,9 m a oeste e 1,3 m ao sul.
 - **Ficam fora:** pé da escada (zona livre até Y = −4,85), abrigo do booster/QCB/cloração (3,0 × 2,5 m), caixa de recepção do extravasor e gaiola da escada marinheiro.
 
 **Recomendação:**
@@ -581,6 +598,9 @@ O **extravasor** só opera em falha: alarme LAHH e parada física de P-101 vêm 
 | `modelo3d/saida/interferencias.md/.json` | Relatório de interferências e zonas livres | Editor |
 | `desenhos/svg/DES-01 … DES-07` | Implantação, perfil hidráulico, estrutura e fundação, arranjo da área, P&ID, unifilar, captação | Navegador ou Inkscape (exportável para PDF/DXF) |
 | `desenhos/gerar_desenhos.py` | Gerador dos desenhos | `python desenhos/gerar_desenhos.py` |
+| `fea/` (`elementos.py`, `portico3d.py`, `placas.py`, `transiente_moc.py`, `run_fea.py`) e `fea/resultados/FEA.md` + PNG | Simulações: pórtico 3D, modal, chapa, radier/Winkler, transiente MOC | `python fea/run_fea.py` |
+| `testes/run_testes.py` e `testes/RELATORIO_TESTES.md` | 16 testes de comprovação contra soluções analíticas e de integridade | `python testes/run_testes.py` |
+| `modelo3d/render_vistas.py` e `modelo3d/vistas/V01…V10.png` | Vistas 3D renderizadas (implantação, caixa, estrutura, abrigo, captação, planta, elevação, status, zonas) | `python modelo3d/render_vistas.py` |
 
 **Reprodução completa:**
 
@@ -653,7 +673,7 @@ Restam **2 ocorrências de sequência de montagem**: o patamar superior e a prum
 | 12 | Válvulas | — | Esfera PN 16: V-101, V-201 (DN 50), V-203, VE-01 e de isolamento (~10). Retenção de mola: CV-102, CV-201A/B. Gaveta/esfera de estrangulamento V-301/V-302 (DN 65). Ventosas e descargas conforme topografia. Juntas flexíveis nos bocais (3). Filtro Y (1). Manômetros (3) | HIP |
 | 13 | Estrutura metálica | ~4,1 t | Ver MC-02 §8: W150×13,0 (11 × 4,4 m); W200×31,3 (3 × 4,4 m); W150×29,8 (9 × ~1,0 m); chapa 9,5 mm (19,4 m²); placas 300×300×22,4 (12); Ø16 com esticador (16); plataforma, grade, guarda-corpos, escada 42°, escada marinheiro com gaiola e patamar; galvanizado a fogo | HIP |
 | 14 | Parafusos, chumbadores, olhais | — | M16/M12 A325 galvanizados; 48 chumbadores M20 F1554 Gr36 galvanizados; 8 olhais de ancoragem | HIP / PEND (olhais) |
-| 15 | Fundação | — | Concreto C30 ~14 m³; lastro ~1,7 m³; CA-50 ~0,75 t; graute 30 mm | **PEND sondagem** |
+| 15 | Fundação | — | Concreto C30 ~14,4 m³; lastro ~1,8 m³; CA-50 ~0,85 t; graute 30 mm | **PEND sondagem** |
 | 16 | Abrigo de equipamentos | 3,0 × 2,5 m | Alvenaria ou metálico, ventilado, porta com chave, compartimento de cloro separado com acesso externo, piso com ralo | HIP |
 | 17 | QCB-01 | 1 | IP65, NBR IEC 61439; seccionadora com bloqueio; DPS; disjuntores-motor; soft-starter 1,5 kW; 2 inversores 0,75 kW; relés de fase e de subcarga; DR; CLP; fonte 24 Vcc; GSM; sinalização; aquecedor | HIP |
 | 18 | Cabos | — | Submersível 4 × 4 mm² (~130 m); alimentador 4 × 4 mm² + PE (~30 m); sinal (~150 m, opcional p/ remoto); eletrodutos PEAD corrugado Ø 50 | HIP |
@@ -715,7 +735,7 @@ Restam **2 ocorrências de sequência de montagem**: o patamar superior e a prum
 |---|---|---|---|---|
 | 1 | Captar água do rio nas condições informadas? | **Sim, preliminarmente** | Bomba sempre afogada entre 97,50 e 102,00; NPSHd 10,1 m; Hman 32,3 m no pior caso (MC-01 §3) | Leito ≤ 95,70 m (batimetria); talude estável; curva real da bomba; outorga ou dispensa; autorização em APP |
 | 2 | Encher e manter a caixa de 50 m³? | **Sim** | 2,7 h/dia de bombeamento (limite 8 h); enchimento inicial de 16,7 h; autonomia de 4,9 dias (MC-01 §2–3) | Volume operacional real (~39 m³) depende do desenho da caixa; enchimento inicial em ≥ 2 dias para não passar de 25 m³/dia |
-| 3 | Sustentar a caixa? | **Sim, no pré-dimensionamento** | Taxa máxima de 0,92 (viga principal); flechas ≤ 2,1 mm; radier a 30 kPa; punção OK (MC-02) | **Ancoragem da caixa vazia é obrigatória**; forma de apoio do fabricante; sondagem e colapsibilidade; recálculo com as edições vigentes das normas |
+| 3 | Sustentar a caixa? | **Sim, no pré-dimensionamento** | Taxa máxima de 0,92 no cálculo manual e 0,81 no pórtico 3D (FEA-01); flechas ≤ 3,1 mm; radier a 30 kPa; recalques de 1–3 mm (FEA-03, k_s hipotético); 16/16 testes de comprovação aprovados | **Ancoragem da caixa vazia é obrigatória**; forma de apoio do fabricante; sondagem e colapsibilidade; recálculo com as edições vigentes das normas |
 | 4 | Fornecer água à casa com a vazão e pressão pedidas? | **Sim, com o booster e com energia** | 2,16 m³/h com ≥ 15 m.c.a. no ponto 122,50; setpoint 32,5 m.c.a.; estática ≤ 24,8 m.c.a. (MC-01 §4) | Curvas reais; traçado e topografia; projeto interno da casa. **Sem energia não há fornecimento** (gerador opcional) |
 | 5 | Operar e permitir manutenção com segurança? | **Sim** | Intertravamentos físicos, alarmes local e remoto, plataforma, escadas e zonas livres verificadas no modelo (2 ocorrências de montagem tratadas) | Procedimentos NR-10, NR-33 e NR-35; acesso ao teto conforme fabricante; treinamento |
 | 6 | Ser construída nas áreas disponíveis? | **Parcialmente** | A estrutura cabe nos 8 × 8 m; o conjunto completo pede 12,5 × 8 m (DES-04) | Aprovação da ampliação; área do guindaste; terraplenagem do platô |

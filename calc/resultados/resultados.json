@@ -127,9 +127,9 @@
   "Nt_diag": 7.718596320676389,
   "FvRd_M16": 49.148471736160324,
   "massa_aco_kg": 4144.386290699166,
-  "N_servico_fundacao": 958.5632507099589,
-  "sigma_med": 28.17646239594235,
-  "sigma_max": 30.322051300683256,
+  "N_servico_fundacao": 969.3632507099588,
+  "sigma_med": 27.617186629913355,
+  "sigma_max": 29.63277062113623,
   "perfil_joist": "W150x13,0",
   "perfil_viga": "W200x31,3",
   "perfil_pilar": "W150x29,8",
@@ -165,7 +165,7 @@
   "d_pilar": 0.157,
   "bf_pilar": 0.153,
   "radier": [
-   6.3,
+   6.5,
    5.4,
    0.4
   ],

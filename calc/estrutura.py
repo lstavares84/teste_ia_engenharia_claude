@@ -533,7 +533,7 @@ def run():
 
     # ------------------------------------------------------------ fundação
     m.h("9. Fundação — radier (pré-dimensionamento, SEM SONDAGEM)")
-    Lr, Br, hr = 6.30, 5.40, 0.40
+    Lr, Br, hr = 6.50, 5.40, 0.40  # 6,50: inclui os pedestais do patamar em X = 83,20 (achado da modelagem FEA)
     W_rad = Lr * Br * hr * GAMMA_CONC
     W_ped = 12 * 0.5 * 0.5 * 0.12 * GAMMA_CONC
     W_aco = tot * G / 1000
@@ -578,7 +578,12 @@ def run():
     As_neg = 0.65 * M0 * 0.75 / 2.2 / (0.9 * d_ef * ACO_CA50["fyk"] * 1e3 / GAMMA["s"]) * 1e4  # faixa dos pilares
     m.calc("Armadura de flexão necessária na faixa dos pilares (estimativa)", "As = 0,65·0,75·M0/l/(0,9·d·fyd)", "", As_neg, "cm²/m", 2)
     m.p("Adotado (preliminar): malha Ø10 c/ 12,5 cm (6,28 cm²/m) nas duas faces e duas direções; arranques dos pedestais "
-        "4 Ø12,5 + estribos Ø6,3 c/ 15. Cobrimento 40 mm. A armadura mínima governa.")
+        "4 Ø12,5 + estribos Ø6,3 c/ 15. Cobrimento 40 mm.")
+    m.p("**Revisão pela FEA-03 (radier sobre Winkler, `fea/`):** a estimativa simplificada acima (reação uniforme) "
+        "SUBESTIMA o momento local sob o pilar central, que concentra ~45 % da carga. A placa de Mindlin sobre molas "
+        "(k = 10–40 MN/m³) indica m* ≈ 73–86 kN·m/m (ELU) na face inferior sob esse pilar, contra MRd ≈ 86 kN·m/m da "
+        "malha mínima (taxa 0,85–1,00). **Adotado reforço inferior adicional Ø12,5 c/ 12,5 cm nas duas direções numa "
+        "região de 2,40 × 2,40 m centrada no pilar central** (As total ≈ 16 cm²/m ⇒ MRd ≈ 210 kN·m/m). Ver FEA.md.")
     m.p("Alternativa avaliada: 9 sapatas isoladas ligadas por vigas-baldrame. Com σadm = 100 kPa a sapata do pilar central "
         f"precisaria de ≈ {f(math.sqrt((reac_p['G'][1][1]+reac_p['Q'][1][1])*1.1/100),2)} m de lado, e as de canto ≈ 0,8 m — "
         "carga muito desigual (central ≈ 30 % do total), com risco de recalque diferencial sob o deck que apoia a caixa. "

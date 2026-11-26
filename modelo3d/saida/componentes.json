@@ -348,7 +348,7 @@
  },
  {
   "tag": "RAD-01",
-  "desc": "Radier C30 6.30 × 5.40 × 0.40 m (pré-dimensionado SEM sondagem)",
+  "desc": "Radier C30 6.50 × 5.40 × 0.40 m (pré-dimensionado SEM sondagem)",
   "cat": "fundacao",
   "status": "PEND",
   "pend": "Sondagem SPT, colapsibilidade, NA",
@@ -365,7 +365,7 @@
     111.62
    ],
    [
-    83.2,
+    83.4,
     2.7,
     112.02
    ]
