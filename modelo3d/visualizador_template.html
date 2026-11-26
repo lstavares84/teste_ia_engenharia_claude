@@ -1,0 +1,204 @@
+<meta charset="utf-8">
+<title>Modelo 3D Captação e Caixa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: prancheta técnica — viewport 3D à esquerda, painel de camadas/inspeção à direita (empilha no celular) */
+:root{
+  --bg:#eef1f4; --panel:#ffffff; --ink:#1d2731; --muted:#5b6876; --line:#d3dae1; --accent:#1f6fb2;
+  --ok:#2b8a3e; --hip:#b7791f; --pend:#c2255c; --clash:#e03131; --view:#dfe5ea;
+  --f-text:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171c; --panel:#1a2128; --ink:#e3e8ed; --muted:#97a3af; --line:#2c3640; --accent:#5aa9e6;
+  --ok:#51cf66; --hip:#f2b84b; --pend:#f06595; --clash:#ff6b6b; --view:#161c22; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171c; --panel:#1a2128; --ink:#e3e8ed; --muted:#97a3af; --line:#2c3640; --accent:#5aa9e6;
+  --ok:#51cf66; --hip:#f2b84b; --pend:#f06595; --clash:#ff6b6b; --view:#161c22; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-text);font-size:14px}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 340px;height:100%;
+  padding-left:max(0px, env(safe-area-inset-left,0px));padding-right:max(0px, env(safe-area-inset-right,0px))}
+#vista{position:relative;min-width:0;background:var(--view)}
+#vista canvas{display:block;width:100%;height:100%}
+.barra{position:absolute;top:12px;left:max(12px, env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100% - 24px)}
+.barra button,.seg button{font:500 12px var(--f-text);border:1px solid var(--line);background:var(--panel);color:var(--ink);
+  padding:6px 10px;border-radius:4px;cursor:pointer}
+.barra button:hover,.seg button:hover{border-color:var(--accent)}
+.barra button:focus-visible,.seg button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.carimbo{position:absolute;right:12px;bottom:12px;font:11px/1.4 var(--f-mono);color:var(--muted);background:var(--panel);
+  border:1px solid var(--line);padding:6px 8px;border-radius:4px;max-width:60%}
+aside{background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding-block:16px;padding-inline:16px;display:flex;flex-direction:column;gap:18px;min-width:0}
+h1{font:600 16px/1.3 var(--f-text);margin:0;text-wrap:balance}
+.sub{color:var(--muted);font-size:12.5px;line-height:1.45;margin:4px 0 0}
+h2{font:600 11px var(--f-text);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+.camadas{display:grid;gap:4px}
+.camadas label{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;padding:2px 0}
+.sw{width:12px;height:12px;border-radius:2px;flex:none;border:1px solid var(--line)}
+.leg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin-top:8px}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+#info{font-size:13px;line-height:1.5;border:1px solid var(--line);border-radius:4px;padding:10px;min-height:84px}
+#info .tag{font:500 13px var(--f-mono)}
+.pill{display:inline-block;font:500 10.5px var(--f-mono);padding:1px 6px;border-radius:3px;color:#fff;margin-left:6px;vertical-align:1px}
+.p-CONF{background:var(--ok)} .p-HIP{background:var(--hip)} .p-PEND{background:var(--pend)}
+#info .pend{color:var(--pend);font-size:12.5px;margin-top:6px}
+ol.clash{margin:0;padding-left:18px;font-size:12.5px;line-height:1.45;display:grid;gap:8px}
+ol.clash button{all:unset;cursor:pointer;color:var(--accent);font-family:var(--f-mono);font-size:12px}
+ol.clash button:focus-visible{outline:2px solid var(--accent)}
+.vazio{color:var(--muted);font-size:12.5px}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+@media (max-width:820px){
+  .app{grid-template-columns:1fr;grid-template-rows:62vh auto;height:auto}
+  #vista{height:62vh}
+  aside{border-left:0;border-top:1px solid var(--line);padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+  .carimbo{display:none}
+}
+</style>
+<div class="app">
+  <div id="vista" aria-label="Vista 3D do conjunto">
+    <div class="barra" role="toolbar" aria-label="Vistas">
+      <button id="v-geral">Implantação</button>
+      <button id="v-caixa">Caixa e estrutura</button>
+      <button id="v-abrigo">Abrigo</button>
+      <button id="v-capt">Captação</button>
+      <button id="v-casa">Casa</button>
+    </div>
+    <div class="carimbo">Y ↑ · origem: centro da caixa, cota 112,00 · Norte = −Z · unidades m<br>Estudo preliminar — não liberar para construção</div>
+  </div>
+  <aside>
+    <div>
+      <h1>Captação, caixa 50 m³ e abastecimento não potável</h1>
+      <p class="sub">Modelo de estudo gerado por script a partir das premissas e memórias de cálculo. Clique em um elemento para identificá-lo.</p>
+    </div>
+    <div>
+      <h2>Cor por</h2>
+      <div class="seg" role="group" aria-label="Modo de cor">
+        <button id="m-cat" aria-pressed="true">Disciplina</button>
+        <button id="m-st" aria-pressed="false">Status do dado</button>
+      </div>
+      <div class="leg" id="leg-st">
+        <span><i class="sw" style="background:var(--ok)"></i>CONF cliente</span>
+        <span><i class="sw" style="background:var(--hip)"></i>HIP hipótese</span>
+        <span><i class="sw" style="background:var(--pend)"></i>PEND fornecedor/campo</span>
+      </div>
+    </div>
+    <div>
+      <h2>Camadas</h2>
+      <div class="camadas" id="camadas"></div>
+    </div>
+    <div>
+      <h2>Elemento selecionado</h2>
+      <div id="info"><span class="vazio">Nenhum elemento selecionado.</span></div>
+    </div>
+    <div>
+      <h2>Interferências detectadas</h2>
+      <ol class="clash" id="clash"></ol>
+    </div>
+  </aside>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DADOS = /*__DADOS__*/null;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const vista = document.getElementById('vista');
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+vista.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 3000);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8899aa, 0.75));
+const sol = new THREE.DirectionalLight(0xffffff, 0.65); sol.position.set(-60, 120, 80); scene.add(sol);
+
+const objs = []; const porCat = {};
+let modo = 'cat';
+function b64(s){const bin = atob(s); const u = new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return new Float32Array(u.buffer);}
+DADOS.itens.forEach(it => {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(b64(it.pos), 3));
+  g.computeVertexNormals();
+  const transp = it.zona || it.cat === 'rio' || it.tag === 'TQ-101';
+  const m = new THREE.MeshStandardMaterial({color: DADOS.cats[it.cat][1], roughness:.75, metalness:.08,
+    transparent: transp, opacity: it.zona ? .22 : (it.cat==='rio' ? .45 : (it.tag==='TQ-101' ? .55 : 1)),
+    side: THREE.DoubleSide, depthWrite: !transp});
+  const mesh = new THREE.Mesh(g, m); mesh.userData = it; scene.add(mesh); objs.push(mesh);
+  (porCat[it.cat] = porCat[it.cat] || []).push(mesh);
+});
+function pintar(){
+  objs.forEach(o => { const it = o.userData;
+    o.material.color.set(modo==='cat' ? DADOS.cats[it.cat][1] : DADOS.status[it.status]);
+    o.material.emissive.set(o === sel ? 0x335577 : 0x000000); });
+}
+// camadas
+const cam = document.getElementById('camadas');
+Object.entries(DADOS.cats).forEach(([k,[nome,cor]]) => {
+  if(!porCat[k]) return;
+  const id = 'c-'+k;
+  const l = document.createElement('label');
+  l.innerHTML = `<input type="checkbox" id="${id}" ${k==='zonas'?'':'checked'}><i class="sw" style="background:${cor}"></i>${nome} <span style="color:var(--muted)">(${porCat[k].length})</span>`;
+  cam.appendChild(l);
+  const cb = l.querySelector('input');
+  const apl = () => porCat[k].forEach(o => o.visible = cb.checked);
+  cb.addEventListener('change', apl); apl();
+});
+// interferências
+const listaC = document.getElementById('clash'); const marcas = [];
+if(!DADOS.clashes.length){ listaC.outerHTML = '<p class="vazio">Nenhuma interferência física ou zona obstruída.</p>'; }
+DADOS.clashes.forEach((c,i) => {
+  const s = new THREE.Mesh(new THREE.SphereGeometry(.18, 16, 12), new THREE.MeshBasicMaterial({color: css('--clash')||'#e03131', depthTest:false}));
+  s.position.set(...c.p); s.renderOrder = 10; scene.add(s); marcas.push(s);
+  const li = document.createElement('li');
+  li.innerHTML = `<button>${c.a} × ${c.b}</button> — ${c.tipo}.<br><span style="color:var(--muted)">${c.trat}</span>`;
+  li.querySelector('button').addEventListener('click', () => focar(new THREE.Vector3(...c.p), 6));
+  listaC && listaC.appendChild(li);
+});
+// seleção
+let sel = null;
+const ray = new THREE.Raycaster(); const ms = new THREE.Vector2(); let down = null;
+renderer.domElement.addEventListener('pointerdown', e => down = [e.clientX, e.clientY]);
+renderer.domElement.addEventListener('pointerup', e => {
+  if(!down || Math.hypot(e.clientX-down[0], e.clientY-down[1]) > 5) return;
+  const r = renderer.domElement.getBoundingClientRect();
+  ms.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
+  ray.setFromCamera(ms, camera);
+  const hit = ray.intersectObjects(objs.filter(o => o.visible && o.userData.tag !== 'TER-01' && !o.userData.zona), false)[0]
+           || ray.intersectObjects(objs.filter(o => o.visible), false)[0];
+  sel = hit ? hit.object : null; mostrar(); pintar();
+});
+function mostrar(){
+  const el = document.getElementById('info');
+  if(!sel){ el.innerHTML = '<span class="vazio">Nenhum elemento selecionado.</span>'; return; }
+  const it = sel.userData;
+  el.innerHTML = `<div><span class="tag">${it.tag}</span><span class="pill p-${it.status}">${it.status}</span></div>
+    <div>${it.desc}</div><div style="color:var(--muted);font-size:12px">${DADOS.cats[it.cat][0]}</div>
+    ${it.pend ? `<div class="pend">Pendência: ${it.pend}</div>` : ''}`;
+}
+// vistas
+function focar(alvo, dist, dir){
+  dir = dir || new THREE.Vector3(1, .75, 1.1).normalize();
+  controls.target.copy(alvo); camera.position.copy(alvo.clone().add(dir.multiplyScalar(dist))); controls.update();
+}
+const V3 = (x,y,z) => new THREE.Vector3(x,y,z);
+const vistas = {
+  'v-geral': () => focar(V3(40, 0, 0), 215, V3(0, .85, 1).normalize()),
+  'v-caixa': () => focar(V3(1.2, 3, 0), 15),
+  'v-abrigo': () => focar(V3(6.5, .8, 0), 7, V3(.6, .9, 1).normalize()),
+  'v-capt': () => focar(V3(-76, -11, 0), 34, V3(.15, .45, 1).normalize()),
+  'v-casa': () => focar(V3(143, 9, 0), 30, V3(-.6, .6, 1).normalize()),
+};
+Object.entries(vistas).forEach(([id,f]) => document.getElementById(id).addEventListener('click', f));
+document.getElementById('m-cat').addEventListener('click', e => {modo='cat'; e.target.setAttribute('aria-pressed','true'); document.getElementById('m-st').setAttribute('aria-pressed','false'); pintar();});
+document.getElementById('m-st').addEventListener('click', e => {modo='st'; e.target.setAttribute('aria-pressed','true'); document.getElementById('m-cat').setAttribute('aria-pressed','false'); pintar();});
+function tema(){ renderer.setClearColor(css('--view') || '#dfe5ea'); marcas.forEach(m => m.material.color.set(css('--clash') || '#e03131')); }
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', tema);
+new MutationObserver(tema).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+function tam(){ const w = vista.clientWidth, h = vista.clientHeight; renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); }
+new ResizeObserver(tam).observe(vista);
+tema(); tam(); vistas['v-caixa'](); pintar();
+(function loop(){ controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+</script>

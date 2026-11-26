@@ -1,0 +1,1849 @@
+[
+ {
+  "tag": "TER-01",
+  "desc": "Terreno — perfil HIPOTÉTICO (sem topografia); platô 112,00 ampliado até X = 88,5 (proposta)",
+  "cat": "terreno",
+  "status": "HIP",
+  "pend": "Levantamento planialtimétrico e perfil dos trechos",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    -16.0,
+    -20.0,
+    95.5
+   ],
+   [
+    236.0,
+    20.0,
+    120.0
+   ]
+  ]
+ },
+ {
+  "tag": "RIO-MIN",
+  "desc": "Nível mínimo de operação 97,50 (largura do rio NÃO informada — margem oposta ilustrativa)",
+  "cat": "rio",
+  "status": "CONF",
+  "pend": "Batimetria e largura do rio (define faixa de APP)",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    -10.0,
+    -20.0,
+    97.49
+   ],
+   [
+    0.0,
+    20.0,
+    97.5
+   ]
+  ]
+ },
+ {
+  "tag": "RIO-NOR",
+  "desc": "Nível normal 100,00 (largura do rio NÃO informada — margem oposta ilustrativa)",
+  "cat": "rio",
+  "status": "CONF",
+  "pend": "Batimetria e largura do rio (define faixa de APP)",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    -12.143,
+    -20.0,
+    99.99
+   ],
+   [
+    3.75,
+    20.0,
+    100.0
+   ]
+  ]
+ },
+ {
+  "tag": "RIO-MAX",
+  "desc": "Nível máximo esperado 102,00 (cheia) (largura do rio NÃO informada — margem oposta ilustrativa)",
+  "cat": "rio",
+  "status": "CONF",
+  "pend": "Batimetria e largura do rio (define faixa de APP)",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    -14.5,
+    -20.0,
+    101.99
+   ],
+   [
+    6.75,
+    20.0,
+    102.0
+   ]
+  ]
+ },
+ {
+  "tag": "TC-101",
+  "desc": "Tubo-camisa PEAD DE200 inclinado, trecho final perfurado + tela inox; tampa na crista (103,80)",
+  "cat": "captacao",
+  "status": "HIP",
+  "pend": "Batimetria/leito ≤ 95,70 no ponto; estabilidade do talude",
+  "permite": [
+   "TER-01",
+   "RIO-MIN",
+   "RIO-NOR",
+   "RIO-MAX",
+   "P-101",
+   "BL-101",
+   "ZN-06"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    -2.35,
+    -0.1,
+    96.0
+   ],
+   [
+    9.55,
+    0.1,
+    103.9
+   ]
+  ]
+ },
+ {
+  "tag": "P-101",
+  "desc": "Bomba submersa 4\" multiestágio + motor 380 V (Q = 3,0 m³/h; H ≥ 33 m) com patim e cabo de içamento inox",
+  "cat": "captacao",
+  "status": "PEND",
+  "pend": "Curva real do fabricante; submergência mínima; teor de areia admissível",
+  "permite": [
+   "TC-101",
+   "RIO-MIN",
+   "RIO-NOR",
+   "RIO-MAX",
+   "TER-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    -2.049,
+    -0.05,
+    96.215
+   ],
+   [
+    -0.863,
+    0.05,
+    97.03
+   ]
+  ]
+ },
+ {
+  "tag": "BL-101",
+  "desc": "Bloco de apoio da extremidade do tubo-camisa (concreto/gabião) + enrocamento de proteção",
+  "cat": "captacao",
+  "status": "HIP",
+  "pend": "Natureza do leito; erosão na cheia",
+  "permite": [
+   "TER-01",
+   "RIO-MIN",
+   "RIO-NOR",
+   "RIO-MAX",
+   "TC-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    -2.8,
+    -0.45,
+    95.55
+   ],
+   [
+    -1.7,
+    0.45,
+    96.0
+   ]
+  ]
+ },
+ {
+  "tag": "CX-101",
+  "desc": "Caixa de válvulas na crista (V-101 registro, CV-102 retenção, PI-101 manômetro, união de desmontagem) — acima da cheia",
+  "cat": "captacao",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TER-01",
+   "TB-101",
+   "EL-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    10.6,
+    0.6,
+    102.765
+   ],
+   [
+    11.4,
+    1.4,
+    103.615
+   ]
+  ]
+ },
+ {
+  "tag": "TB-101-M",
+  "desc": "Mangueira/PEAD flexível de recalque dentro do tubo-camisa até a caixa de válvulas (desconectada para içar a bomba)",
+  "cat": "tub_p1",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TC-101",
+   "CX-101",
+   "ZN-06",
+   "TER-01",
+   "TB-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    9.43,
+    -0.02,
+    103.045
+   ],
+   [
+    10.62,
+    1.02,
+    103.82
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-06",
+  "desc": "Zona livre para içamento/retirada da bomba P-101 pelo eixo do tubo-camisa",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TER-01",
+   "TC-101",
+   "TB-101-M"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    9.15,
+    -0.3,
+    103.5
+   ],
+   [
+    11.55,
+    0.3,
+    105.3
+   ]
+  ]
+ },
+ {
+  "tag": "TB-101",
+  "desc": "Recalque PEAD PE100 DE40 SDR11 PN16 enterrado (0,7 m), eletrofusão — rio → abrigo",
+  "cat": "tub_p1",
+  "status": "HIP",
+  "pend": "Traçado, pontos altos (ventosas) e travessias conforme topografia",
+  "permite": [
+   "CX-101",
+   "TER-01",
+   "ABR-PISO",
+   "F-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    10.58,
+    -3.62,
+    102.778
+   ],
+   [
+    85.1,
+    1.02,
+    112.62
+   ]
+  ]
+ },
+ {
+  "tag": "F-101",
+  "desc": "Filtro autolimpante (tela/disco ~130 µm [H]) com retrolavagem por ΔP, descarga para o dreno",
+  "cat": "equip",
+  "status": "PEND",
+  "pend": "Curva de perda de carga, malha conforme análise de sólidos",
+  "permite": [
+   "TB-101",
+   "TB-102",
+   "ABR-PISO"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    85.08,
+    0.38,
+    111.98
+   ],
+   [
+    85.32,
+    0.62,
+    112.92
+   ]
+  ]
+ },
+ {
+  "tag": "TB-102",
+  "desc": "Hidrômetro FQ-101 + injeção de cloro + prumada DE40 até a entrada N1 no teto (descarga livre 117,80)",
+  "cat": "tub_p1",
+  "status": "HIP",
+  "pend": "Posição do bocal N1 e forma do teto (fornecedor)",
+  "permite": [
+   "F-101",
+   "FQ-101",
+   "ABR-N",
+   "PL-01",
+   "TQ-101",
+   "N1",
+   "TER-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    80.78,
+    0.6,
+    112.28
+   ],
+   [
+    85.67,
+    1.82,
+    118.37
+   ]
+  ]
+ },
+ {
+  "tag": "FQ-101",
+  "desc": "Hidrômetro com saída pulsada (registro de volume captado — exigência típica de outorga/cadastro)",
+  "cat": "equip",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TB-102"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    85.45,
+    0.62,
+    112.52
+   ],
+   [
+    85.62,
+    0.78,
+    112.68
+   ]
+  ]
+ },
+ {
+  "tag": "RAD-01",
+  "desc": "Radier C30 6.30 × 5.40 × 0.40 m (pré-dimensionado SEM sondagem)",
+  "cat": "fundacao",
+  "status": "PEND",
+  "pend": "Sondagem SPT, colapsibilidade, NA",
+  "permite": [
+   "TER-01",
+   "PED",
+   "TB-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    76.9,
+    -2.7,
+    111.62
+   ],
+   [
+    83.2,
+    2.7,
+    112.02
+   ]
+  ]
+ },
+ {
+  "tag": "PED",
+  "desc": "Pedestais 50×50 cm + graute 30 mm + chumbadores 4×M20 F1554 Gr36",
+  "cat": "fundacao",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "RAD-01",
+   "PB",
+   "PIL",
+   "PST"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.15,
+    -2.45,
+    112.02
+   ],
+   [
+    83.35,
+    2.45,
+    112.12
+   ]
+  ]
+ },
+ {
+  "tag": "PB",
+  "desc": "Placas de base 300×300×22,4 A36",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PED",
+   "PIL",
+   "PST"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.25,
+    -2.35,
+    112.15
+   ],
+   [
+    83.05,
+    2.35,
+    112.172
+   ]
+  ]
+ },
+ {
+  "tag": "PIL",
+  "desc": "Pilares W150x29,8 A572 Gr50 (9 un.)",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PB",
+   "VP",
+   "CTV",
+   "PED"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.321,
+    -2.276,
+    112.172
+   ],
+   [
+    81.878,
+    2.276,
+    113.133
+   ]
+  ]
+ },
+ {
+  "tag": "VP",
+  "desc": "Vigas principais W200x31,3 contínuas (3 un.) + enrijecedores de apoio",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PIL",
+   "VS",
+   "CTV",
+   "VPL"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.33,
+    -2.267,
+    113.133
+   ],
+   [
+    81.87,
+    2.267,
+    113.342
+   ]
+  ]
+ },
+ {
+  "tag": "VS",
+  "desc": "Vigas secundárias W150x13,0 @ 0,44 m (11 un.) contínuas",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "VP",
+   "CH-01",
+   "ANC",
+   "VPL",
+   "GC-DECK"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.35,
+    -2.25,
+    113.342
+   ],
+   [
+    81.85,
+    2.25,
+    113.49
+   ]
+  ]
+ },
+ {
+  "tag": "CH-01",
+  "desc": "Chapa de piso lisa 9,5 mm A36 em 5 painéis parafusados (cabeça escareada) — apoio integral da caixa",
+  "cat": "estrutura",
+  "status": "PEND",
+  "pend": "Forma de apoio, planicidade e manta exigidas pelo fabricante",
+  "permite": [
+   "VS",
+   "TQ-101",
+   "ANC",
+   "GC-DECK",
+   "PST-PT"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.4,
+    -2.2,
+    113.49
+   ],
+   [
+    81.8,
+    2.2,
+    113.5
+   ]
+  ]
+ },
+ {
+  "tag": "CTV",
+  "desc": "Contraventamento em X, barras Ø16 A36 com esticador (4 faces)",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PIL",
+   "VP"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.392,
+    -2.208,
+    112.244
+   ],
+   [
+    81.808,
+    2.208,
+    113.06
+   ]
+  ]
+ },
+ {
+  "tag": "ANC",
+  "desc": "8 ancoragens da caixa (olhal no deck; Td ≈ 5 kN cada) — tipo depende do fabricante",
+  "cat": "estrutura",
+  "status": "PEND",
+  "pend": "Pontos e cargas admissíveis de ancoragem da caixa",
+  "permite": [
+   "CH-01",
+   "TQ-101",
+   "VS",
+   "ZN-04"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.647,
+    -1.953,
+    113.5
+   ],
+   [
+    81.553,
+    1.953,
+    113.65
+   ]
+  ]
+ },
+ {
+  "tag": "VPL",
+  "desc": "Vigas da plataforma de serviço W150×13,0",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PST",
+   "PL-01",
+   "PIL",
+   "VP",
+   "VS"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.88,
+    -2.25,
+    113.322
+   ],
+   [
+    82.95,
+    2.25,
+    113.47
+   ]
+  ]
+ },
+ {
+  "tag": "PST",
+  "desc": "Postes da plataforma W150×22,5 (3 un.)",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PB",
+   "VPL",
+   "PED"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    82.824,
+    -2.276,
+    112.172
+   ],
+   [
+    82.976,
+    2.276,
+    113.322
+   ]
+  ]
+ },
+ {
+  "tag": "PL-01",
+  "desc": "Plataforma de serviço 1,0 × 4,4 m, piso grade galvanizada, cota 113,50 — acesso aos registros dos bocais",
+  "cat": "acesso",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "VPL",
+   "TB-102",
+   "TB-201",
+   "DR-301",
+   "PST-PT",
+   "GC-PL",
+   "ES-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.86,
+    -2.2,
+    113.47
+   ],
+   [
+    82.95,
+    2.2,
+    113.5
+   ]
+  ]
+ },
+ {
+  "tag": "GC-PL",
+  "desc": "Guarda-corpo da plataforma h = 1,10 m (travessões + rodapé)",
+  "cat": "acesso",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PL-01",
+   "VPL",
+   "ES-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.839,
+    -2.221,
+    113.479
+   ],
+   [
+    82.921,
+    2.221,
+    114.621
+   ]
+  ]
+ },
+ {
+  "tag": "GC-DECK",
+  "desc": "Guarda-corpo removível no perímetro do deck (remover durante o içamento da caixa)",
+  "cat": "acesso",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "CH-01",
+   "VS",
+   "ZN-04"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.409,
+    -2.191,
+    113.479
+   ],
+   [
+    81.761,
+    2.191,
+    114.621
+   ]
+  ]
+ },
+ {
+  "tag": "ES-01",
+  "desc": "Escada 42° (1,00 m de largura, 8 espelhos de 0,19 m) plataforma ↔ terreno",
+  "cat": "acesso",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PL-01",
+   "VPL",
+   "TER-01",
+   "RAD-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.89,
+    -3.89,
+    111.96
+   ],
+   [
+    82.91,
+    -2.16,
+    114.42
+   ]
+  ]
+ },
+ {
+  "tag": "PST-PT",
+  "desc": "Montantes do patamar superior (tubo 100×100) — 2 no radier, 2 sobre a plataforma",
+  "cat": "acesso",
+  "status": "PEND",
+  "pend": "Depende do acesso ao teto previsto pelo fabricante",
+  "permite": [
+   "PED",
+   "PL-01",
+   "PT-01",
+   "CH-01",
+   "VS"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.85,
+    0.45,
+    112.07
+   ],
+   [
+    83.25,
+    1.35,
+    118.1
+   ]
+  ]
+ },
+ {
+  "tag": "PT-01",
+  "desc": "Patamar superior 1,75 × 0,80 m (cota 118,10) com guarda-corpo, acesso à boca de visita do teto",
+  "cat": "acesso",
+  "status": "PEND",
+  "pend": "Posição da boca de visita, resistência do teto (fornecedor)",
+  "permite": [
+   "PST-PT",
+   "EM-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.45,
+    0.479,
+    118.05
+   ],
+   [
+    83.42,
+    1.321,
+    119.221
+   ]
+  ]
+ },
+ {
+  "tag": "EM-01",
+  "desc": "Escada marinheiro com gaiola (início do guarda-corpo a 2,3 m) terreno → patamar 118,10 — alternativa: escada do fabricante",
+  "cat": "acesso",
+  "status": "PEND",
+  "pend": "Requisitos NR-35/NBR ISO 14122-4 e acessório do fabricante",
+  "permite": [
+   "PT-01",
+   "TER-01",
+   "RAD-01",
+   "PST-PT"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    83.38,
+    0.578,
+    111.98
+   ],
+   [
+    84.14,
+    1.222,
+    119.22
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-03",
+  "desc": "Espaço livre de subida da escada marinheiro",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "EM-01",
+   "TER-01"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    83.43,
+    0.6,
+    112.05
+   ],
+   [
+    84.07,
+    1.2,
+    119.1
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-01",
+  "desc": "Faixa livre de circulação da plataforma (0,70 m × 2,1 m de altura)",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "PL-01"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    82.05,
+    -2.2,
+    113.51
+   ],
+   [
+    82.75,
+    2.17,
+    115.6
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-08",
+  "desc": "Área livre ao pé da escada (1,0 m)",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [],
+  "zona": true,
+  "aabb": [
+   [
+    81.9,
+    -4.85,
+    112.05
+   ],
+   [
+    82.9,
+    -3.9,
+    114.1
+   ]
+  ]
+ },
+ {
+  "tag": "TQ-101",
+  "desc": "Caixa d'água 50 m³ Ø4,00 × 4,50 m, 1 200 kg vazia (dados do fornecedor fictício — sem desenho certificado)",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "Desenho certificado, bocais, apoio, ancoragem, tampa, ventilação",
+  "permite": [
+   "CH-01",
+   "ANC",
+   "N1",
+   "N2",
+   "N3",
+   "N4",
+   "BV",
+   "LT-101",
+   "TB-102",
+   "TB-201",
+   "DR-301",
+   "EX-401"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    77.6,
+    -2.0,
+    111.5
+   ],
+   [
+    81.6,
+    2.0,
+    120.0
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-04",
+  "desc": "Envelope de içamento da caixa (Ø4,20 até 6 m acima do topo) — montagem por guindaste",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "BV",
+   "LT-101",
+   "N1",
+   "ANC",
+   "GC-DECK"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    77.5,
+    -2.1,
+    115.92
+   ],
+   [
+    81.7,
+    2.1,
+    126.1
+   ]
+  ]
+ },
+ {
+  "tag": "N1",
+  "desc": "Bocal N1 — entrada no teto, descarga livre em 117,80 (separação atmosférica)",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "TB-102",
+   "ZN-04"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    80.76,
+    1.26,
+    117.91
+   ],
+   [
+    80.84,
+    1.34,
+    118.12
+   ]
+  ]
+ },
+ {
+  "tag": "N2",
+  "desc": "Bocal N2 — saída DN50 eixo 113,80 (0,25 m acima do fundo) para pressurização",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "TB-201"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.482,
+    -0.345,
+    113.755
+   ],
+   [
+    81.702,
+    -0.255,
+    113.845
+   ]
+  ]
+ },
+ {
+  "tag": "N3",
+  "desc": "Bocal N3 — dreno de fundo DN65/75 eixo 113,62",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "DR-301"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.232,
+    -1.05,
+    113.57
+   ],
+   [
+    81.462,
+    -0.95,
+    113.67
+   ]
+  ]
+ },
+ {
+  "tag": "N4",
+  "desc": "Bocal N4 — extravasor DN100, soleira 117,61 (50 m³), com tela",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "EX-401"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    80.808,
+    -1.565,
+    117.545
+   ],
+   [
+    81.088,
+    -1.435,
+    117.675
+   ]
+  ]
+ },
+ {
+  "tag": "BV",
+  "desc": "Boca de visita/ventilação no teto (posição e dimensão do fabricante)",
+  "cat": "caixa",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "ZN-04"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    78.92,
+    -0.68,
+    117.65
+   ],
+   [
+    81.2,
+    1.15,
+    118.45
+   ]
+  ]
+ },
+ {
+  "tag": "LT-101",
+  "desc": "Transmissor de nível no teto + boias LSHH/LSLL suspensas (internas)",
+  "cat": "eletrica",
+  "status": "PEND",
+  "pend": "",
+  "permite": [
+   "TQ-101",
+   "ZN-04"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    79.85,
+    -0.65,
+    118.0
+   ],
+   [
+    80.05,
+    -0.45,
+    118.25
+   ]
+  ]
+ },
+ {
+  "tag": "TB-201",
+  "desc": "Saída N2 → V-201 (na plataforma) → junta flexível → filtro Y → coletor de sucção DE63 dos boosters",
+  "cat": "tub_casa",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "N2",
+   "TQ-101",
+   "PL-01",
+   "CH-01",
+   "ABR-O",
+   "SK-201",
+   "VPL"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.546,
+    -0.832,
+    112.268
+   ],
+   [
+    85.032,
+    -0.268,
+    113.831
+   ]
+  ]
+ },
+ {
+  "tag": "DR-301",
+  "desc": "Dreno N3 DE75: V-301 (plataforma) + V-302 de estrangulamento (≤ 3 L/s) → caixa CP-301",
+  "cat": "drenagem",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "N3",
+   "TQ-101",
+   "PL-01",
+   "CH-01",
+   "CP-301"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    81.295,
+    -1.238,
+    112.163
+   ],
+   [
+    83.488,
+    -0.962,
+    113.658
+   ]
+  ]
+ },
+ {
+  "tag": "EX-401",
+  "desc": "Extravasor DN100 com tela anti-insetos, descarga visível com separação atmosférica sobre CP-301",
+  "cat": "drenagem",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "N4",
+   "TQ-101",
+   "SP-401"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    80.868,
+    -1.555,
+    112.395
+   ],
+   [
+    83.755,
+    -1.445,
+    117.665
+   ]
+  ]
+ },
+ {
+  "tag": "SP-401",
+  "desc": "Suporte do extravasor (tubo 60 mm sobre bloco próprio, fora da caixa de recepção)",
+  "cat": "estrutura",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "EX-401",
+   "RAD-01",
+   "TER-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    83.685,
+    -1.65,
+    111.7
+   ],
+   [
+    84.3,
+    -1.35,
+    117.78
+   ]
+  ]
+ },
+ {
+  "tag": "CP-301",
+  "desc": "Caixa de recepção dreno/extravasor 0,6 × 0,8 m com grelha (separação atmosférica, inspeção visual)",
+  "cat": "drenagem",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "DR-301",
+   "TER-01",
+   "RAD-01",
+   "DR-302"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    83.4,
+    -1.9,
+    111.5
+   ],
+   [
+    84.0,
+    -1.1,
+    112.05
+   ]
+  ]
+ },
+ {
+  "tag": "DR-302",
+  "desc": "Linha de descarte DN100 por gravidade (i ≥ 1 %) → caixa de decantação/descloração CD-301",
+  "cat": "drenagem",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "CP-301",
+   "TER-01",
+   "CD-301"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    60.445,
+    -5.055,
+    109.286
+   ],
+   [
+    83.755,
+    -1.845,
+    111.755
+   ]
+  ]
+ },
+ {
+  "tag": "CD-301",
+  "desc": "Caixa de decantação e descloração (≈ 2 m³) — destino final a aprovar",
+  "cat": "drenagem",
+  "status": "PEND",
+  "pend": "Aprovação ambiental do ponto de descarte",
+  "permite": [
+   "DR-302",
+   "TER-01",
+   "VI-301"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    59.0,
+    -5.8,
+    108.675
+   ],
+   [
+    60.5,
+    -4.2,
+    109.975
+   ]
+  ]
+ },
+ {
+  "tag": "VI-301",
+  "desc": "Vala de infiltração/dispersão 8 × 1 m (≥ 12 m da fundação; ≥ 50 m da margem — conferir APP)",
+  "cat": "drenagem",
+  "status": "PEND",
+  "pend": "Ensaio de infiltração; largura do rio/APP; aprovação CETESB/município",
+  "permite": [
+   "TER-01",
+   "CD-301"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    51.0,
+    -5.5,
+    108.41
+   ],
+   [
+    59.0,
+    -4.5,
+    109.23
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-PISO",
+  "desc": "Abrigo de equipamentos 3,0 × 2,5 m — laje de piso (FORA da área 8×8: requer ampliação)",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TER-01",
+   "TB-101",
+   "F-101",
+   "SK-201",
+   "ABR-O",
+   "ABR-N",
+   "ABR-L",
+   "ABR-S",
+   "CL-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    84.6,
+    -1.5,
+    111.9
+   ],
+   [
+    87.6,
+    1.0,
+    112.1
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-O",
+  "desc": "Abrigo — parede oeste",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO",
+   "TB-201",
+   "ABR-N",
+   "ABR-S",
+   "ABR-T"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    84.6,
+    -1.5,
+    112.1
+   ],
+   [
+    84.75,
+    1.0,
+    114.6
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-N",
+  "desc": "Abrigo — parede norte (QCB fixado internamente)",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO",
+   "TB-102",
+   "QCB-01",
+   "ABR-O",
+   "ABR-L",
+   "ABR-T",
+   "EL-102"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    84.6,
+    0.85,
+    112.1
+   ],
+   [
+    87.6,
+    1.0,
+    114.6
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-L",
+  "desc": "Abrigo — parede leste",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO",
+   "TB-202",
+   "ABR-N",
+   "ABR-S",
+   "ABR-T",
+   "EL-102"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    87.45,
+    -1.5,
+    112.1
+   ],
+   [
+    87.6,
+    1.0,
+    114.6
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-S",
+  "desc": "Abrigo — parede sul com porta 0,9 m",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO",
+   "ABR-O",
+   "ABR-L",
+   "ABR-T",
+   "EL-101",
+   "CL-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    84.6,
+    -1.5,
+    112.1
+   ],
+   [
+    87.6,
+    -1.35,
+    114.6
+   ]
+  ]
+ },
+ {
+  "tag": "ABR-T",
+  "desc": "Abrigo — cobertura ventilada",
+  "cat": "civil",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-O",
+   "ABR-N",
+   "ABR-L",
+   "ABR-S"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    84.5,
+    -1.6,
+    114.6
+   ],
+   [
+    87.7,
+    1.1,
+    114.7
+   ]
+  ]
+ },
+ {
+  "tag": "SK-201",
+  "desc": "Conjunto pressurizador duplex P-201A/B (2 × 100 %, 0,75 kW, inversor, Q = 2,2 m³/h, H ≥ 31 m) + vaso PV-201",
+  "cat": "equip",
+  "status": "PEND",
+  "pend": "Curvas reais; vazão mínima; ajuste do inversor",
+  "permite": [
+   "ABR-PISO",
+   "TB-201",
+   "TB-202"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    85.0,
+    -1.25,
+    112.09
+   ],
+   [
+    86.3,
+    -0.35,
+    112.64
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-05",
+  "desc": "Zona de remoção/manutenção das bombas do booster (frente do skid)",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    85.0,
+    -0.34,
+    112.12
+   ],
+   [
+    86.3,
+    0.2,
+    113.0
+   ]
+  ]
+ },
+ {
+  "tag": "CL-101",
+  "desc": "Compartimento de cloração separado e ventilado (tanque de solução 100 L + dosadora DP-101) — acesso externo",
+  "cat": "equip",
+  "status": "PEND",
+  "pend": "Produto e dosagem conforme análise de água",
+  "permite": [
+   "ABR-PISO",
+   "ABR-S",
+   "ABR-L"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    86.85,
+    -1.35,
+    112.1
+   ],
+   [
+    87.45,
+    -0.45,
+    112.85
+   ]
+  ]
+ },
+ {
+  "tag": "QCB-01",
+  "desc": "Quadro de comando e proteção QCB-01 IP65 (soft-starter P-101, inversores P-201, CLP, DPS, DR, GSM)",
+  "cat": "eletrica",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-N",
+   "EL-102"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    85.9,
+    0.7,
+    113.0
+   ],
+   [
+    86.7,
+    0.85,
+    114.2
+   ]
+  ]
+ },
+ {
+  "tag": "ZN-02",
+  "desc": "Espaço livre de operação à frente do QCB (≥ 1,0 m)",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO"
+  ],
+  "zona": true,
+  "aabb": [
+   [
+    85.9,
+    -0.3,
+    112.12
+   ],
+   [
+    86.7,
+    0.69,
+    114.2
+   ]
+  ]
+ },
+ {
+  "tag": "TB-202",
+  "desc": "Linha não potável PEAD DE40 SDR11 enterrada (0,7 m), fita de aviso ‘ÁGUA NÃO POTÁVEL’, identificação lilás",
+  "cat": "tub_casa",
+  "status": "HIP",
+  "pend": "Traçado, travessia da estrada (camisa ≥ 1,0 m), pontos altos",
+  "permite": [
+   "SK-201",
+   "ABR-L",
+   "ABR-PISO",
+   "TER-01",
+   "CE-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    86.18,
+    -0.82,
+    111.28
+   ],
+   [
+    218.82,
+    -0.78,
+    119.647
+   ]
+  ]
+ },
+ {
+  "tag": "EL-101",
+  "desc": "Eletroduto PEAD corrugado Ø50 com cabo 4×4 mm² p/ bomba submersa + cabo de sinal (L ≈ 130 m)",
+  "cat": "eletrica",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "ABR-PISO",
+   "ABR-S",
+   "TER-01",
+   "CX-101"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    11.375,
+    -3.325,
+    102.913
+   ],
+   [
+    85.425,
+    1.325,
+    111.425
+   ]
+  ]
+ },
+ {
+  "tag": "QE-EX",
+  "desc": "Quadro existente junto à área da caixa (posição, capacidade e esquema de aterramento A LEVANTAR)",
+  "cat": "eletrica",
+  "status": "PEND",
+  "pend": "Capacidade, proteção geral, Icc, esquema de aterramento",
+  "permite": [
+   "TER-01",
+   "EL-102"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    88.3,
+    3.3,
+    112.0
+   ],
+   [
+    88.7,
+    3.7,
+    113.8
+   ]
+  ]
+ },
+ {
+  "tag": "EL-102",
+  "desc": "Alimentador 4×4 mm² + PE (QE existente → QCB-01)",
+  "cat": "eletrica",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "QE-EX",
+   "TER-01",
+   "ABR-N",
+   "ABR-PISO",
+   "QCB-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    86.98,
+    0.88,
+    111.48
+   ],
+   [
+    88.52,
+    3.52,
+    112.62
+   ]
+  ]
+ },
+ {
+  "tag": "ATR-01",
+  "desc": "Malha/anel de aterramento + eletrodo de fundação no radier, ligado à estrutura e ao QCB",
+  "cat": "eletrica",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TER-01",
+   "RAD-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    76.69,
+    -2.91,
+    111.49
+   ],
+   [
+    83.41,
+    2.91,
+    111.51
+   ]
+  ]
+ },
+ {
+  "tag": "CE-01",
+  "desc": "Caixa de entrada não potável: registro VE-01, identificação — LIMITE DO ESCOPO (1 m antes da parede)",
+  "cat": "casa",
+  "status": "HIP",
+  "pend": "",
+  "permite": [
+   "TB-202",
+   "TER-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    218.5,
+    -1.2,
+    119.4
+   ],
+   [
+    219.3,
+    -0.4,
+    120.15
+   ]
+  ]
+ },
+ {
+  "tag": "CASA",
+  "desc": "Casa (volume ilustrativo — projeto interno é de terceiros)",
+  "cat": "casa",
+  "status": "HIP",
+  "pend": "Projeto das instalações internas (NBR 5626 / NBR 16783)",
+  "permite": [
+   "TER-01",
+   "PA-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    220.5,
+    -6.5,
+    120.0
+   ],
+   [
+    232.0,
+    6.5,
+    125.0
+   ]
+  ]
+ },
+ {
+  "tag": "PA-01",
+  "desc": "Ponto de consumo mais alto — cota 122,50, p ≥ 15 m.c.a. (posição real a informar)",
+  "cat": "casa",
+  "status": "CONF",
+  "pend": "",
+  "permite": [
+   "CASA"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    224.85,
+    2.85,
+    122.25
+   ],
+   [
+    225.15,
+    3.15,
+    122.75
+   ]
+  ]
+ },
+ {
+  "tag": "POT-EX",
+  "desc": "Entrada do sistema POTÁVEL existente (fora do escopo) — manter afastada e sem interligação",
+  "cat": "casa",
+  "status": "PEND",
+  "pend": "Posição real do sistema potável",
+  "permite": [
+   "TER-01"
+  ],
+  "zona": false,
+  "aabb": [
+   [
+    218.5,
+    4.0,
+    119.4
+   ],
+   [
+    219.3,
+    4.8,
+    120.15
+   ]
+  ]
+ },
+ {
+  "tag": "AREA-8x8",
+  "desc": "Área disponível informada 8 × 8 m (X 76–84)",
+  "cat": "zonas",
+  "status": "CONF",
+  "pend": "",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    76.0,
+    -4.0,
+    112.03
+   ],
+   [
+    84.0,
+    4.0,
+    112.05
+   ]
+  ]
+ },
+ {
+  "tag": "AREA-AMP",
+  "desc": "Ampliação proposta 4,5 × 8 m (abrigo, caixa de recepção, pé da escada, circulação)",
+  "cat": "zonas",
+  "status": "HIP",
+  "pend": "",
+  "permite": [],
+  "zona": false,
+  "aabb": [
+   [
+    84.0,
+    -4.0,
+    112.03
+   ],
+   [
+    88.5,
+    4.0,
+    112.05
+   ]
+  ]
+ }
+]

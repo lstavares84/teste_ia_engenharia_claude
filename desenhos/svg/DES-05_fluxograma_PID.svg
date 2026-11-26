@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" font-family="Segoe UI, Helvetica, Arial, sans-serif"><rect x="0" y="0" width="1500" height="900" fill="#ffffff"/><rect x="5" y="5" width="1490" height="890" fill="none" stroke="#222" stroke-width="1.5"/><text x="30.0" y="36.0" font-size="13" text-anchor="start" font-weight="bold" fill="#111">DES-05 — FLUXOGRAMA DE PROCESSO E INSTRUMENTAÇÃO (simplificado)</text>
+<rect x="40.0" y="180.0" width="90.0" height="200.0" stroke="#2f75b5" stroke-width="1" fill="#9cc3e6" fill-opacity="0.6"/>
+<text x="85.0" y="170.0" font-size="11" text-anchor="middle" font-weight="bold" fill="#1f4e79">RIO</text>
+<text x="85.0" y="398.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#1f4e79">97,50 / 100,00 / 102,00</text>
+<rect x="110.0" y="290.0" width="70.0" height="40.0" stroke="#c77d2e" stroke-width="1.2" fill="#f6dfc5" fill-opacity="1"/>
+<text x="145.0" y="345.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">TC-101 camisa</text>
+<text x="145.0" y="356.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">+ tela inox</text>
+<circle cx="145.0" cy="310.0" r="16.0" stroke="#222" stroke-width="1.4" fill="#fff" fill-opacity="1"/>
+<polygon points="135.0,320.0 159.0,310.0 135.0,300.0" stroke="#222" stroke-width="1" fill="none" fill-opacity="1"/>
+<text x="145.0" y="342.0" font-size="10.5" text-anchor="middle" font-weight="bold" fill="#111"></text>
+<text x="145.0" y="275.0" font-size="10.5" text-anchor="middle" font-weight="bold" fill="#111">P-101</text>
+<circle cx="145.0" cy="230.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="145.0" y="229.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">LSL</text>
+<text x="145.0" y="239.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">100</text>
+<line x1="145.0" y1="244.0" x2="145.0" y2="290.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<polyline points="161.0,310.0 230.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="240.0,303.0 240.0,317.0 260.0,303.0 260.0,317.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<line x1="240.0" y1="317.0" x2="260.0" y2="303.0" stroke="#222" stroke-width="1.6" opacity="1"/>
+<text x="250.0" y="298.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CV-101</text>
+<polyline points="260.0,310.0 320.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="320.0" y="280.0" width="150.0" height="60.0" stroke="#888" stroke-width="0.8" fill="none" fill-opacity="1" stroke-dasharray="4,3"/>
+<text x="395.0" y="352.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CX-101 (crista, cota &gt; 102)</text>
+<polygon points="335.0,303.0 335.0,317.0 355.0,303.0 355.0,317.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="345.0" y="298.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">V-101</text>
+<polygon points="380.0,303.0 380.0,317.0 400.0,303.0 400.0,317.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<line x1="380.0" y1="317.0" x2="400.0" y2="303.0" stroke="#222" stroke-width="1.6" opacity="1"/>
+<text x="390.0" y="298.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CV-102</text>
+<circle cx="430.0" cy="268.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="430.0" y="267.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">PI</text>
+<text x="430.0" y="277.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">101</text>
+<line x1="430.0" y1="282.0" x2="430.0" y2="310.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<polyline points="355.0,310.0 380.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polyline points="400.0,310.0 560.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<text x="515.0" y="328.0" font-size="9.5" text-anchor="middle" font-weight="normal" fill="#2f9e8f">TB-101 DE40 — 115 m</text>
+<rect x="560.0" y="285.0" width="40.0" height="60.0" stroke="#222" stroke-width="1.2" fill="#fff" fill-opacity="1"/>
+<line x1="560.0" y1="345.0" x2="600.0" y2="285.0" stroke="#222" stroke-width="0.6" opacity="1"/>
+<text x="580.0" y="360.0" font-size="10" text-anchor="middle" font-weight="bold" fill="#111">F-101</text>
+<circle cx="580.0" cy="240.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="580.0" y="239.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">PDSH</text>
+<text x="580.0" y="249.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">101</text>
+<line x1="580.0" y1="254.0" x2="580.0" y2="285.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<polyline points="580.0,345.0 580.0,420.0" stroke="#6b7f96" stroke-width="1.4" fill="none" stroke-dasharray="6,3" opacity="1" stroke-linejoin="round"/>
+<text x="585.0" y="435.0" font-size="9" text-anchor="start" font-weight="normal" fill="#6b7f96">retrolavagem → CP-301</text>
+<polyline points="600.0,310.0 650.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="650.0" y="298.0" width="30.0" height="24.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="665.0" y="314.0" font-size="9" text-anchor="middle" font-weight="bold" fill="#111">FQ</text>
+<text x="665.0" y="340.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">FQ-101</text>
+<polyline points="680.0,310.0 760.0,310.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="700.0" y="380.0" width="40.0" height="50.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="720.0" y="445.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CL-101 + DP-101</text>
+<polyline points="720.0,380.0 720.0,310.0" stroke="#222" stroke-width="1" fill="none" stroke-dasharray="2,2" opacity="1" stroke-linejoin="round"/>
+<text x="726.0" y="360.0" font-size="8.5" text-anchor="start" font-weight="normal" fill="#111">hipoclorito</text>
+<rect x="780.0" y="170.0" width="170.0" height="260.0" stroke="#1f6fb2" stroke-width="1.6" fill="#dbe8f5" fill-opacity="0.7"/>
+<text x="865.0" y="160.0" font-size="11" text-anchor="middle" font-weight="bold" fill="#111">TQ-101  50 m³</text>
+<line x1="780.0" y1="181.7" x2="950.0" y2="181.7" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="181.7" x2="958.0" y2="181.7" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="184.7" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">N1 entrada livre 117,80</text>
+<line x1="780.0" y1="192.8" x2="950.0" y2="192.8" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="192.8" x2="958.0" y2="192.8" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="195.8" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">extravasor 117,61</text>
+<line x1="780.0" y1="199.2" x2="950.0" y2="199.2" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="199.2" x2="958.0" y2="203.8" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="206.8" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">LAHH 117,50</text>
+<line x1="780.0" y1="208.0" x2="950.0" y2="208.0" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="208.0" x2="958.0" y2="214.8" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="217.8" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">P-101 desliga 117,35</text>
+<line x1="780.0" y1="240.1" x2="950.0" y2="240.1" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="240.1" x2="958.0" y2="240.1" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="243.1" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">P-101 liga 116,80</text>
+<line x1="780.0" y1="374.5" x2="950.0" y2="374.5" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="374.5" x2="958.0" y2="374.5" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="377.5" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">LAL 114,50</text>
+<line x1="780.0" y1="394.9" x2="950.0" y2="394.9" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="394.9" x2="958.0" y2="394.9" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="397.9" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">LSLL 114,15</text>
+<line x1="780.0" y1="415.4" x2="950.0" y2="415.4" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="415.4" x2="958.0" y2="415.4" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="418.4" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">N2 saída 113,80</text>
+<line x1="780.0" y1="430.0" x2="950.0" y2="430.0" stroke="#1f4e79" stroke-width="0.6" stroke-dasharray="3,2" opacity="1"/>
+<line x1="950.0" y1="430.0" x2="958.0" y2="430.0" stroke="#1f4e79" stroke-width="0.4" opacity="1"/>
+<text x="960.0" y="433.0" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1f4e79">fundo 113,55</text>
+<polyline points="760.0,310.0 760.0,190.0 800.0,190.0 800.0,205.0" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<circle cx="760.0" cy="120.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="760.0" y="119.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">LT</text>
+<text x="760.0" y="129.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">101</text>
+<line x1="760.0" y1="134.0" x2="800.0" y2="170.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<circle cx="820.0" cy="120.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="820.0" y="119.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">LSHH</text>
+<text x="820.0" y="129.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">101</text>
+<line x1="820.0" y1="134.0" x2="830.0" y2="170.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<circle cx="880.0" cy="120.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="880.0" y="119.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">LSLL</text>
+<text x="880.0" y="129.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">101</text>
+<line x1="880.0" y1="134.0" x2="870.0" y2="170.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<polyline points="950.0,192.8 1030.0,192.8 1030.0,560.0" stroke="#6b7f96" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polyline points="950.0,420.0 990.0,420.0 990.0,470.0" stroke="#6b7f96" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="983.0,440.0 997.0,440.0 983.0,460.0 997.0,460.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="990.0" y="438.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">V-301</text>
+<polygon points="983.0,490.0 997.0,490.0 983.0,510.0 997.0,510.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="990.0" y="488.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">V-302 (estrang.)</text>
+<polyline points="990.0,510.0 990.0,560.0" stroke="#6b7f96" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="960.0" y="560.0" width="100.0" height="40.0" stroke="#222" stroke-width="1" fill="#eee" fill-opacity="1"/>
+<text x="1010.0" y="584.0" font-size="10" text-anchor="middle" font-weight="bold" fill="#111">CP-301</text>
+<text x="1065.0" y="548.0" font-size="8.5" text-anchor="start" font-weight="normal" fill="#111">sep. atmosférica</text>
+<polyline points="1060.0,580.0 1140.0,580.0" stroke="#6b7f96" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="1140.0" y="560.0" width="90.0" height="40.0" stroke="#222" stroke-width="1" fill="#eee" fill-opacity="1"/>
+<text x="1185.0" y="584.0" font-size="10" text-anchor="middle" font-weight="bold" fill="#111">CD-301</text>
+<polyline points="1230.0,580.0 1290.0,580.0" stroke="#6b7f96" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<rect x="1290.0" y="565.0" width="110.0" height="30.0" stroke="#222" stroke-width="1" fill="#e9f2df" fill-opacity="1"/>
+<text x="1345.0" y="584.0" font-size="10" text-anchor="middle" font-weight="bold" fill="#111">VI-301 vala</text>
+<text x="1185.0" y="620.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#6b7f96">decantação + descloração → infiltração/dispersão (aprovação ambiental)</text>
+<polyline points="780.0,415.0 720.0,415.0 720.0,640.0 660.0,640.0" stroke="#8a4fbf" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="735.0,408.0 735.0,422.0 755.0,408.0 755.0,422.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="745.0" y="403.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">V-201</text>
+<rect x="705.0" y="520.0" width="30.0" height="20.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="745.0" y="534.0" font-size="8.5" text-anchor="start" font-weight="normal" fill="#111">JF-201 / Y-201</text>
+<polyline points="660.0,640.0 640.0,640.0 640.0,610.0 600.0,610.0" stroke="#8a4fbf" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<circle cx="580.0" cy="610.0" r="16.0" stroke="#222" stroke-width="1.4" fill="#fff" fill-opacity="1"/>
+<polygon points="570.0,620.0 594.0,610.0 570.0,600.0" stroke="#222" stroke-width="1" fill="none" fill-opacity="1"/>
+<text x="580.0" y="642.0" font-size="10.5" text-anchor="middle" font-weight="bold" fill="#111">P-201A</text>
+<text x="580.0" y="655.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#444">0,75 kW + inversor</text>
+<polyline points="564.0,610.0 520.0,610.0 520.0,650.0" stroke="#8a4fbf" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="530.0,603.0 530.0,617.0 550.0,603.0 550.0,617.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<line x1="530.0" y1="617.0" x2="550.0" y2="603.0" stroke="#222" stroke-width="1.6" opacity="1"/>
+<text x="540.0" y="598.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CV</text>
+<polyline points="660.0,640.0 640.0,640.0 640.0,690.0 600.0,690.0" stroke="#8a4fbf" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<circle cx="580.0" cy="690.0" r="16.0" stroke="#222" stroke-width="1.4" fill="#fff" fill-opacity="1"/>
+<polygon points="570.0,700.0 594.0,690.0 570.0,680.0" stroke="#222" stroke-width="1" fill="none" fill-opacity="1"/>
+<text x="580.0" y="722.0" font-size="10.5" text-anchor="middle" font-weight="bold" fill="#111">P-201B</text>
+<text x="580.0" y="735.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#444">0,75 kW + inversor</text>
+<polyline points="564.0,690.0 520.0,690.0 520.0,650.0" stroke="#8a4fbf" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="530.0,683.0 530.0,697.0 550.0,683.0 550.0,697.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<line x1="530.0" y1="697.0" x2="550.0" y2="683.0" stroke="#222" stroke-width="1.6" opacity="1"/>
+<text x="540.0" y="678.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">CV</text>
+<polyline points="520.0,650.0 430.0,650.0" stroke="#8a4fbf" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<circle cx="470.0" cy="690.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="470.0" y="694.0" font-size="9" text-anchor="middle" font-weight="bold" fill="#111">PV</text>
+<text x="470.0" y="722.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">PV-201</text>
+<line x1="470.0" y1="676.0" x2="470.0" y2="650.0" stroke="#222" stroke-width="1" opacity="1"/>
+<circle cx="470.0" cy="600.0" r="14.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="470.0" y="599.0" font-size="8.5" text-anchor="middle" font-weight="bold" fill="#111">PT</text>
+<text x="470.0" y="609.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#111">201</text>
+<line x1="470.0" y1="614.0" x2="470.0" y2="650.0" stroke="#222" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<polygon points="400.0,643.0 400.0,657.0 420.0,643.0 420.0,657.0" stroke="#222" stroke-width="1" fill="#fff" fill-opacity="1"/>
+<text x="410.0" y="638.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">V-203</text>
+<polyline points="400.0,650.0 230.0,650.0" stroke="#8a4fbf" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<text x="315.0" y="668.0" font-size="9.5" text-anchor="middle" font-weight="normal" fill="#8a4fbf">TB-202 PEAD DE40 — 160 m (NÃO POTÁVEL, lilás)</text>
+<rect x="150.0" y="620.0" width="80.0" height="60.0" stroke="#8b7d66" stroke-width="1.2" fill="#f4efe6" fill-opacity="1"/>
+<text x="190.0" y="645.0" font-size="10" text-anchor="middle" font-weight="bold" fill="#111">CE-01</text>
+<text x="190.0" y="660.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#111">VE-01</text>
+<line x1="140.0" y1="600.0" x2="140.0" y2="720.0" stroke="#c2255c" stroke-width="2" stroke-dasharray="8,4" opacity="1"/>
+<text x="135.0" y="740.0" font-size="9.5" text-anchor="end" font-weight="bold" fill="#c2255c">LIMITE DO ESCOPO</text>
+<text x="60.0" y="760.0" font-size="9" text-anchor="start" font-weight="normal" fill="#555">→ instalação interna (terceiros): vasos, torneiras de uso restrito, irrigação</text>
+<rect x="1100.0" y="180.0" width="200.0" height="150.0" stroke="#f08a24" stroke-width="1.4" fill="#fff4e8" fill-opacity="1"/>
+<text x="1200.0" y="200.0" font-size="11" text-anchor="middle" font-weight="bold" fill="#111">QCB-01 (CLP + relés)</text>
+<text x="1110.0" y="222.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• soft-starter P-101 + relé subcarga</text>
+<text x="1110.0" y="238.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• inversores P-201A/B (alternância)</text>
+<text x="1110.0" y="254.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• intertravamentos físicos LSHH/LSLL</text>
+<text x="1110.0" y="270.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• DP-101 habilitada só c/ P-101</text>
+<text x="1110.0" y="286.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• alarme local + remoto (casa/GSM)</text>
+<text x="1110.0" y="302.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">• registro de volume (FQ-101)</text>
+<polyline points="760.0,106.0 760.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="820.0,106.0 820.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="880.0,106.0 880.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="580.0,226.0 580.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="145.0,216.0 145.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="470.0,586.0 470.0,90.0 1200.0,90.0 1200.0,180.0" stroke="#f08a24" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="1" stroke-linejoin="round"/>
+<text x="1210.0" y="104.0" font-size="9" text-anchor="start" font-weight="normal" fill="#f08a24">sinais de instrumentação/comando (tracejado laranja)</text>
+<text x="1100.0" y="380.0" font-size="10.5" text-anchor="start" font-weight="bold" fill="#111">LÓGICA PRINCIPAL</text>
+<text x="1100.0" y="398.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">P-101 LIGA: LT &lt; 116,80 e permissivos OK</text>
+<text x="1100.0" y="413.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">P-101 DESLIGA: LT ≥ 117,35 ou LSHH ou LSL-100</text>
+<text x="1100.0" y="428.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">  ou subcarga (marcha a seco) ou ΔP filtro alto</text>
+<text x="1100.0" y="443.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">  ou tempo máx. de operação (vazamento)</text>
+<text x="1100.0" y="458.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">Rearme subcarga: 3 tentativas/30 min → bloqueio</text>
+<text x="1100.0" y="473.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">P-201 HABILITADO: LT &gt; 114,15 e LSLL OK</text>
+<text x="1100.0" y="488.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">P-201 controle: pressão constante 32,5 m.c.a.</text>
+<text x="1100.0" y="503.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">Falta de energia: tudo para; caixa mantém</text>
+<text x="1100.0" y="518.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">  volume; casa SEM água até retorno/gerador</text>
+<rect x="1060.0" y="798.0" width="430.0" height="92.0" stroke="#222" stroke-width="1.2" fill="#fff" fill-opacity="1"/>
+<line x1="1060.0" y1="824.0" x2="1490.0" y2="824.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<line x1="1060.0" y1="858.0" x2="1490.0" y2="858.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<line x1="1360.0" y1="824.0" x2="1360.0" y2="890.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<text x="1068.0" y="816.0" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Fluxograma de engenharia</text>
+<text x="1068.0" y="839.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">Captação, caixa 50 m³ e abastecimento não potável — área rural, interior de SP</text>
+<text x="1068.0" y="852.0" font-size="9.5" text-anchor="start" font-weight="bold" fill="#b00020">ESTUDO PRELIMINAR DE EXERCÍCIO — NÃO VÁLIDO PARA FABRICAÇÃO/CONSTRUÇÃO</text>
+<text x="1068.0" y="874.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Cotas em m (referência fictícia do cliente); dimensões em m salvo indicação</text>
+<text x="1068.0" y="885.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Responsável técnico: a designar (ART obrigatória no executivo)</text>
+<text x="1368.0" y="842.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">DES-05</text>
+<text x="1368.0" y="855.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Escala: sem escala</text>
+<text x="1368.0" y="874.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Data: 26/11/2026</text>
+<text x="1368.0" y="885.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Rev. 0 — emissão p/ estudo</text>
+<text x="1060.0" y="790.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#333">2) Nenhuma interligação com o sistema potável. Eventual reposição potável só com separação atmosférica na caixa.</text>
+<text x="1060.0" y="777.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#333">Notas: 1) Tags e níveis conforme MC-01; níveis dependem do desenho certificado da caixa.</text></svg>

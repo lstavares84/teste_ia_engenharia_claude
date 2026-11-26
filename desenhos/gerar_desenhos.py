@@ -1,0 +1,780 @@
+# -*- coding: utf-8 -*-
+"""Gera os desenhos do estudo em SVG (abrem em qualquer navegador; importáveis em Inkscape/CAD).
+
+Uso: python desenhos/gerar_desenhos.py   -> desenhos/svg/DES-0x_*.svg
+Todos os desenhos leem as mesmas premissas/resultados/componentes do modelo 3D.
+"""
+import json
+import math
+import os
+import sys
+
+AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(AQUI, "..", "modelo3d"))
+sys.path.insert(0, os.path.join(AQUI, "..", "calc"))
+import componentes as CP  # noqa: E402
+from premissas import *  # noqa: E402,F401
+
+OUT = os.path.join(AQUI, "svg")
+os.makedirs(OUT, exist_ok=True)
+RES = CP.RES
+HID = RES["MC-01_hidraulica"]
+EST = RES["MC-02_estrutura_fundacao"]
+DATA = "26/11/2026"
+
+
+def br(x, n=2):
+    return f"{x:,.{n}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+class SVG:
+    def __init__(self, w, h, titulo, numero, escala):
+        self.w, self.h = w, h
+        self.e = []
+        self.titulo, self.numero, self.escala = titulo, numero, escala
+
+    def add(self, s):
+        self.e.append(s)
+
+    def line(self, x1, y1, x2, y2, c="#222", w=1.0, dash=None, op=1):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        self.add(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{c}" stroke-width="{w}"{d} opacity="{op}"/>')
+
+    def pl(self, pts, c="#222", w=1.0, fill="none", dash=None, op=1):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        p = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+        self.add(f'<polyline points="{p}" stroke="{c}" stroke-width="{w}" fill="{fill}"{d} opacity="{op}" stroke-linejoin="round"/>')
+
+    def poly(self, pts, c="#222", w=1.0, fill="none", op=1, dash=None):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        p = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+        self.add(f'<polygon points="{p}" stroke="{c}" stroke-width="{w}" fill="{fill}" fill-opacity="{op}"{d}/>')
+
+    def rect(self, x, y, w, h, c="#222", sw=1.0, fill="none", op=1, dash=None):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        self.add(f'<rect x="{min(x, x + w):.1f}" y="{min(y, y + h):.1f}" width="{abs(w):.1f}" height="{abs(h):.1f}" stroke="{c}" stroke-width="{sw}" fill="{fill}" fill-opacity="{op}"{d}/>')
+
+    def circ(self, x, y, r, c="#222", sw=1.0, fill="none", op=1, dash=None):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        self.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" stroke="{c}" stroke-width="{sw}" fill="{fill}" fill-opacity="{op}"{d}/>')
+
+    def t(self, x, y, s, size=11, anc="start", wgt="normal", c="#111", rot=0, ital=False):
+        tr = f' transform="rotate({rot} {x:.1f} {y:.1f})"' if rot else ""
+        st = ' font-style="italic"' if ital else ""
+        s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        self.add(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" text-anchor="{anc}" font-weight="{wgt}" fill="{c}"{tr}{st}>{s}</text>')
+
+    def cota(self, x1, y1, x2, y2, txt, off=14, size=10, c="#333"):
+        """Cota alinhada (horizontal ou vertical) com linhas de chamada."""
+        if abs(y2 - y1) < 1e-6:  # horizontal
+            yy = y1 + off
+            self.line(x1, y1, x1, yy + 3 * (1 if off > 0 else -1), c, 0.5)
+            self.line(x2, y2, x2, yy + 3 * (1 if off > 0 else -1), c, 0.5)
+            self.line(x1, yy, x2, yy, c, 0.7)
+            for x in (x1, x2):
+                self.line(x - 3, yy + 3, x + 3, yy - 3, c, 1)
+            self.t((x1 + x2) / 2, yy - 3, txt, size, "middle", c=c)
+        else:
+            xx = x1 + off
+            self.line(x1, y1, xx + 3 * (1 if off > 0 else -1), y1, c, 0.5)
+            self.line(x2, y2, xx + 3 * (1 if off > 0 else -1), y2, c, 0.5)
+            self.line(xx, y1, xx, y2, c, 0.7)
+            for y in (y1, y2):
+                self.line(xx - 3, y + 3, xx + 3, y - 3, c, 1)
+            self.t(xx - 4, (y1 + y2) / 2, txt, size, "middle", c=c, rot=-90)
+
+    def chamada(self, x, y, tx, ty, txt, size=10, c="#111", anc=None):
+        self.line(x, y, tx, ty, "#555", 0.6)
+        self.circ(x, y, 1.6, "#555", 0.6, "#555")
+        anc = anc or ("start" if tx >= x else "end")
+        lines = txt.split("\n")
+        for i, l in enumerate(lines):
+            self.t(tx + (3 if anc == "start" else -3), ty + 3 + i * (size + 2), l, size, anc, c=c)
+
+    def nivel(self, x, y, txt, c="#1f4e79"):
+        self.poly([(x, y), (x - 5, y - 8), (x + 5, y - 8)], c, 0.8, c, 1)
+        self.t(x + 8, y - 2, txt, 10, c=c)
+
+    def carimbo(self, notas=()):
+        w, h = 430, 92
+        x, y = self.w - w - 10, self.h - h - 10
+        self.rect(x, y, w, h, "#222", 1.2, "#fff")
+        self.line(x, y + 26, x + w, y + 26, "#222", 0.8)
+        self.line(x, y + 60, x + w, y + 60, "#222", 0.8)
+        self.line(x + 300, y + 26, x + 300, y + h, "#222", 0.8)
+        self.t(x + 8, y + 18, self.titulo, 13, wgt="bold")
+        self.t(x + 8, y + 41, "Captação, caixa 50 m³ e abastecimento não potável — área rural, interior de SP", 9.5)
+        self.t(x + 8, y + 54, "ESTUDO PRELIMINAR DE EXERCÍCIO — NÃO VÁLIDO PARA FABRICAÇÃO/CONSTRUÇÃO", 9.5, wgt="bold", c="#b00020")
+        self.t(x + 8, y + 76, "Cotas em m (referência fictícia do cliente); dimensões em m salvo indicação", 9)
+        self.t(x + 8, y + 87, "Responsável técnico: a designar (ART obrigatória no executivo)", 9)
+        self.t(x + 308, y + 44, self.numero, 15, wgt="bold")
+        self.t(x + 308, y + 57, f"Escala: {self.escala}", 9)
+        self.t(x + 308, y + 76, f"Data: {DATA}", 9)
+        self.t(x + 308, y + 87, "Rev. 0 — emissão p/ estudo", 9)
+        ny = y - 8
+        for n in reversed(notas):
+            self.t(x, ny, n, 9.5, c="#333")
+            ny -= 13
+
+    def salvar(self, nome):
+        head = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {self.w} {self.h}" width="{self.w}" height="{self.h}" '
+                f'font-family="Segoe UI, Helvetica, Arial, sans-serif">'
+                f'<rect x="0" y="0" width="{self.w}" height="{self.h}" fill="#ffffff"/>'
+                f'<rect x="5" y="5" width="{self.w-10}" height="{self.h-10}" fill="none" stroke="#222" stroke-width="1.5"/>')
+        open(os.path.join(OUT, nome), "w", encoding="utf-8").write(head + "\n".join(self.e) + "</svg>")
+
+
+COR = {k: v[1] for k, v in CP.CATEGORIAS.items()}
+
+
+# ====================================================================== DES-01 implantação
+def des01():
+    s = SVG(1500, 720, "Implantação geral", "DES-01", "1:1250 (gráfica)")
+    k = 5.4
+    ox, oy = 40 - (-20) * k, 300
+
+    def P(x, y):
+        return ox + x * k, oy - y * k
+    s.t(30, 36, "DES-01 — IMPLANTAÇÃO GERAL (planta). Eixo X ao longo do traçado rio → casa; Norte = +Y (para cima).", 13, wgt="bold")
+    # rio
+    for nivel, cor, nome in [(102.0, "#9cc3e6", "máx. 102,00"), (100.0, "#5d9fd6", "normal 100,00"), (97.5, "#2f75b5", "mín. 97,50")]:
+        xb = (nivel - 97.5) * 1.5
+        xa = -13.0 + (nivel - 101.0) / (97.5 - 101.0) * 3.0 if nivel <= 101 else -13.0 - (nivel - 101.0) / 2.0 * 3.0
+        x1, y1 = P(max(xa, -20), 20)
+        x2, y2 = P(xb, -20)
+        s.rect(x1, y1, x2 - x1, y2 - y1, "none", 0, cor, 0.55)
+    s.t(*P(-19, -23), "RIO (largura não informada)", 10, c="#1f4e79")
+    # terreno: curvas indicativas
+    for z in (104, 106, 108, 110, 112, 114, 116, 118, 120):
+        for xx in range(-20, 236):
+            if abs(CP.z_terreno(xx) - z) < 0.07 or (CP.z_terreno(xx) < z <= CP.z_terreno(xx + 1)):
+                x1, y1 = P(xx, 20)
+                x2, y2 = P(xx, -20)
+                s.line(x1, y1, x2, y2, "#9aa88a", 0.6, "2,3")
+                s.t(x2 + 2, y2 - 3, f"{z}", 8, c="#6b7a5c")
+                break
+    s.t(*P(100, -23), "Curvas indicativas a cada 2 m — PERFIL HIPOTÉTICO, sem levantamento topográfico", 9, c="#6b7a5c")
+    # APP indicativa
+    x1, y1 = P(3.75, 20)
+    x2, y2 = P(3.75 + 50, -20)
+    s.rect(x1, y1, x2 - x1, y2 - y1, "#2b8a3e", 0.8, "#2b8a3e", 0.06, "6,4")
+    s.t(*P(5, 18.5), "APP indicativa: 30 m (rio < 10 m) ou 50 m (10–50 m) — largura a medir", 9, c="#2b8a3e")
+    # componentes (planta por AABB/linhas)
+    comps = CP.construir()
+    for c in comps:
+        if c["tag"] in ("TER-01", "RIO-MIN", "RIO-NOR", "RIO-MAX") or c["zona"]:
+            continue
+        col = COR[c["cat"]]
+        for p in c["prims"]:
+            if p["t"] == "cyl":
+                a, b = p["a"], p["b"]
+                if c["tag"] == "TQ-101":
+                    s.circ(*P(a[0], a[1]), 2.0 * k, col, 1.2, col, 0.5)
+                else:
+                    s.line(*P(a[0], a[1]), *P(b[0], b[1]), col, 1.6 if c["cat"].startswith("tub") or c["cat"] == "drenagem" else 0.8)
+            elif p["t"] == "box":
+                (x0, y0, _), (x1_, y1_, _) = p["min"], p["max"]
+                xa_, ya_ = P(x0, y1_)
+                xb_, yb_ = P(x1_, y0)
+                s.rect(xa_, ya_, xb_ - xa_, yb_ - ya_, col, 0.7, col, 0.35)
+    # casa
+    # chamadas
+    s.chamada(*P(-0.5, 0), *P(2, -31), "Captação: tubo-camisa DE200 + bomba submersa P-101\n(sem energia na margem: cabo a partir do QCB-01)", anc="start")
+    s.chamada(*P(11, 1), *P(14, 29), "CX-101 caixa de válvulas (acima da cheia)", anc="start")
+    s.chamada(*P(45, -3.6), *P(60, -31), "TB-101 recalque PEAD DE40 enterrado + eletroduto EL-101", anc="start")
+    s.chamada(*P(79.6, 0), *P(70, 40), "TQ-101 caixa 50 m³ sobre estrutura metálica (radier)", anc="end")
+    s.chamada(*P(86, -0.3), *P(92, 29), "Abrigo: booster duplex, filtro, cloração, QCB-01", anc="start")
+    s.chamada(*P(55, -5), *P(60, -41), "Descarte: CD-301 + vala VI-301 (aprovação ambiental)", anc="start")
+    s.chamada(*P(150, -0.8), *P(142, 29), "TB-202 linha NÃO POTÁVEL DE40 enterrada (identificação lilás)", anc="start")
+    s.chamada(*P(219, -0.8), *P(205, -31), "CE-01 limite do escopo (VE-01)", anc="end")
+    s.chamada(*P(219, 4.4), *P(205, 40), "Entrada potável existente — sem interligação", anc="end")
+    s.chamada(*P(226, 0), *P(226, -41), "Casa — ponto mais alto 122,50", anc="end")
+    # cotas
+    x1, y1 = P(0, -20)
+    x2, _ = P(79.6, -20)
+    x3, _ = P(219.6, -20)
+    s.cota(x1, y1 + 92, x2, y1 + 92, "80,00 (horizontal, dado do cliente)", 16)
+    s.cota(x2, y1 + 92, x3, y1 + 92, "140,00 (horizontal, dado do cliente)", 16)
+    # tabela de coordenadas
+    tb = [("Ponto", "X (m)", "Y (m)", "Cota (m)", "Origem"),
+          ("Captação — borda d'água nível mínimo", "0,00", "0,00", "97,50", "cliente + hip."),
+          ("Crista da margem", "8,25", "—", "103,00", "cliente + hip. talude 1:1,5"),
+          ("Crista do tubo-camisa", "9,45", "0,00", "103,80", "hipótese"),
+          ("Centro da caixa (área 8×8 X 76–84)", "79,60", "0,00", "112,00 / base 113,50", "cliente + hip."),
+          ("Abrigo de equipamentos (ampliação)", "84,6–87,6", "−1,5–1,0", "112,00", "hipótese"),
+          ("Entrada da casa (CE-01)", "219,60", "−0,80", "120,00", "cliente + hip."),
+          ("Ponto de consumo mais alto", "≈225", "—", "122,50", "cliente")]
+    xt, yt = 30, 530
+    cw = [260, 80, 80, 140, 170]
+    for i, row in enumerate(tb):
+        xx = xt
+        for j, cell in enumerate(row):
+            s.t(xx + 4, yt + i * 17, cell, 10, wgt="bold" if i == 0 else "normal")
+            xx += cw[j]
+        s.line(xt, yt + i * 17 + 5, xt + sum(cw), yt + i * 17 + 5, "#bbb", 0.5)
+    # barra de escala
+    bx, by = 30, 690
+    for i in range(5):
+        s.rect(bx + i * 10 * k, by, 10 * k, 6, "#222", 0.6, "#222" if i % 2 == 0 else "#fff")
+    s.t(bx, by - 4, "0", 9)
+    s.t(bx + 50 * k, by - 4, "50 m", 9, "middle")
+    s.carimbo(["Notas: 1) traçado retilíneo esquemático; o traçado real depende de topografia, travessias e servidões.",
+               "2) Distâncias informadas são horizontais; comprimentos de tubo adotados: 115 m (P-101) e 160 m (P-201).",
+               "3) Faixa de APP depende da largura do rio — confirmar antes de localizar captação e descarte."])
+    s.salvar("DES-01_implantacao_geral.svg")
+
+
+# ====================================================================== DES-02 perfil hidráulico
+def des02():
+    s = SVG(1500, 760, "Perfil hidráulico", "DES-02", "H 1:1250 / V 1:125 (exag. 10×)")
+    kx, kz = 5.4, 11.0
+    ox = 60 + 20 * kx
+    oz = 640
+
+    def P(x, z):
+        return ox + x * kx, oz - (z - 94.0) * kz
+    s.t(30, 36, "DES-02 — PERFIL LONGITUDINAL E LINHAS PIEZOMÉTRICAS (condições de projeto)", 13, wgt="bold")
+    # grade
+    for z in range(94, 148, 2):
+        s.line(*P(-20, z), *P(236, z), "#e6e6e6", 0.6)
+        s.t(P(-20, z)[0] - 6, P(-20, z)[1] + 3, f"{z}", 9, "end", c="#666")
+    for x in range(-20, 240, 20):
+        s.line(*P(x, 94), *P(x, 146), "#f0f0f0", 0.6)
+        s.t(P(x, 94)[0], P(x, 94)[1] + 14, f"{x}", 9, "middle", c="#666")
+    s.t(P(108, 94)[0], P(108, 94)[1] + 30, "X ao longo do traçado (m)", 10, "middle")
+    s.t(25, P(0, 120)[1], "Cota (m)", 10, "middle", rot=-90)
+    # rio
+    for n, cor in [(102.0, "#9cc3e6"), (100.0, "#5d9fd6"), (97.5, "#2f75b5")]:
+        xb = (n - 97.5) * 1.5
+        s.line(*P(-20, n), *P(xb, n), cor, 1.6)
+    s.nivel(*P(-17, 102.0), "máx 102,00")
+    s.nivel(*P(-17, 100.0), "normal 100,00")
+    s.nivel(*P(-17, 97.5), "mín 97,50")
+    terr = [(x, z) for x, z in CP.PERFIL_TERRENO_MOD if x >= -20]
+    s.pl([P(x, z) for x, z in terr], "#6b7a5c", 2)
+    s.poly([P(x, z) for x, z in terr] + [P(236, 94), P(-20, 94)], "none", 0, "#c9d2b8", 0.35)
+    # tubo camisa e bomba
+    s.line(*P(-2.25, 96.1), *P(9.45, 103.8), COR["captacao"], 3)
+    s.circ(*P(-1.6, 96.5), 4, "#c77d2e", 1, "#c77d2e")
+    # recalque enterrado (esquemático)
+    s.pl([P(x, CP.z_terreno(x) - 0.7) for x in range(12, 85, 2)], COR["tub_p1"], 1.4, dash="5,3")
+    s.pl([P(x, CP.z_terreno(x) - 0.7) for x in range(88, 220, 4)], COR["tub_casa"], 1.4, dash="5,3")
+    # caixa
+    x0, z0 = P(77.6, 113.5)
+    x1, z1 = P(81.6, 118.0)
+    s.rect(x0, z1, x1 - x0, z0 - z1, "#5d6b7a", 1, "#cfd8e3", 0.8)
+    s.rect(P(77.4, 112)[0], P(77.4, 113.5)[1], 4.4 * kx, 1.5 * kz, "#5d6b7a", 0.8, "#5d6b7a", 0.4)
+    for nome, z in [("P-101 desliga 117,35", NIVEIS["P1_desliga"]), ("LSLL 114,15 (booster para)", NIVEIS["LSLL_desliga_booster"])]:
+        s.line(*P(76, z), *P(83, z), "#1f4e79", 0.8, "3,2")
+        s.t(P(83, z)[0] + 3, P(83, z)[1] + 3, nome, 9, c="#1f4e79")
+    # casa
+    xc0, zc0 = P(220.5, 120)
+    xc1, zc1 = P(232, 123.2)
+    s.rect(xc0, zc1, xc1 - xc0, zc0 - zc1, "#8b7d66", 1, "#e8dfcf", 0.9)
+    s.circ(*P(225, 122.5), 4, "#c2255c", 1, "#c2255c")
+    s.t(P(225, 122.5)[0] - 6, P(225, 122.5)[1] - 8, "ponto mais alto 122,50", 9, "end", c="#c2255c")
+    # HGL P-101
+    H1 = HID["H1_proj"]
+    hgl0 = COTAS["rio_min"] + H1
+    perdas_tubo = (H1 - (NIVEIS["entrada_N1_descarga_livre"] - COTAS["rio_min"]) - CAPTACAO["perda_filtro_sujo_m"] - CAPTACAO["perda_hidrometro_m"])
+    hgl_filtro_in = hgl0 - perdas_tubo * 0.85
+    pts = [P(-1.6, hgl0), P(85.2, hgl_filtro_in), P(85.2, hgl_filtro_in - CAPTACAO["perda_filtro_sujo_m"] - CAPTACAO["perda_hidrometro_m"]),
+           P(80.8, NIVEIS["entrada_N1_descarga_livre"])]
+    s.pl(pts, COR["tub_p1"], 2.2)
+    s.t(P(2, hgl0)[0], P(2, hgl0)[1] - 6, f"LP P-101: Q = 3,0 m³/h, Hman = {br(H1,1)} m (rio mín., filtro sujo) → {br(hgl0,1)}", 10, c=COR["tub_p1"], wgt="bold")
+    # HGL P-201
+    H2s = HID["p_setpoint"]
+    hglb = BOOSTER["z_eixo_bomba"] + H2s
+    hgl_ent = hglb - BOOSTER["fator_seg_perdas"] * (HID["hf2"] + 0.26) - BOOSTER["perda_hidrometro_m"]
+    pts = [P(86.2, NIVEIS["LSLL_desliga_booster"]), P(86.2, hglb), P(219.6, hgl_ent), P(225, HID["HGL_req"])]
+    s.pl(pts, COR["tub_casa"], 2.2)
+    s.t(P(100, hglb)[0], P(100, hglb)[1] - 8, f"LP P-201 (2,16 m³/h, setpoint {br(H2s,1)} m.c.a. na descarga) → {br(hglb,1)}", 10, c=COR["tub_casa"], wgt="bold")
+    s.line(*P(200, HID["HGL_req"]), *P(236, HID["HGL_req"]), "#c2255c", 1, "4,3")
+    s.t(P(236, HID["HGL_req"])[0] - 2, P(236, HID["HGL_req"])[1] - 4, "LP requerida 137,50 (122,50 + 15)", 9.5, "end", c="#c2255c")
+    # linha estática da caixa
+    s.line(*P(81.6, NIVEIS["P1_desliga"]), *P(236, NIVEIS["P1_desliga"]), "#888", 1, "2,4")
+    s.t(P(165, NIVEIS["P1_desliga"])[0], P(165, NIVEIS["P1_desliga"])[1] + 13,
+        "Nível máximo da caixa 117,35 < piso da casa 120,00 → sem abastecimento por gravidade", 9.5, "middle", c="#555")
+    # cotas verticais
+    xx = P(236, 0)[0] + 16
+    s.cota(xx - 30, P(0, NIVEIS["P1_desliga"])[1], xx - 30, P(0, HID["HGL_req"])[1], "20,15 m", 28)
+    s.carimbo(["Notas: 1) Perfil do terreno HIPOTÉTICO (interpolação linear entre cotas informadas).",
+               "2) LP = linha piezométrica (energia), perdas com +10 % de segurança; trechos internos da casa: verba 2,5 m.",
+               "3) Pontos altos intermediários (ventosas) só podem ser identificados com levantamento topográfico."])
+    s.salvar("DES-02_perfil_hidraulico.svg")
+
+
+# ====================================================================== DES-03 estrutura
+def des03():
+    s = SVG(1500, 1000, "Estrutura metálica e fundação", "DES-03", "1:50 / 1:10 (det.)")
+    s.t(30, 36, "DES-03 — ESTRUTURA METÁLICA DE APOIO DA CAIXA E FUNDAÇÃO (pré-dimensionamento)", 13, wgt="bold")
+    k = 80.0
+    xs, ys = EST["xs_pil"], EST["ys_pil"]
+    ox, oy = 90 - (xs[0] - 0.6) * k, 110 + (ys[-1] + 0.6) * k
+
+    def P(x, y):
+        return ox + x * k, oy - y * k
+    s.t(60, 70, "PLANTA DO VIGAMENTO (deck 113,50) — escala 1:50", 11, wgt="bold")
+    # radier
+    Lr, Br, hr = EST["radier"]
+    a = P(76.9, Br / 2)
+    b = P(76.9 + Lr, -Br / 2)
+    s.rect(a[0], a[1], b[0] - a[0], b[1] - a[1], "#888", 0.8, "#eeeeea", 1, "6,3")
+    s.t(a[0] + 4, b[1] - 6, f"Radier {br(Lr)} × {br(Br)} × {br(hr)} (C30) — contorno tracejado", 9.5, c="#555")
+    # vigas principais (X)
+    for y in ys:
+        s.rect(*P(xs[0] - 0.07, y + EST["bf_viga"] / 2), (xs[-1] - xs[0] + 0.14) * k, EST["bf_viga"] * k, "#3b4652", 0.8, "#8794a3", 0.9)
+    # secundárias (Y)
+    for x in EST["xs_j"]:
+        s.rect(*P(x - EST["bf_joist"] / 2, ys[-1] + 0.05), EST["bf_joist"] * k, (ys[-1] - ys[0] + 0.1) * k, "#3b4652", 0.6, "#b9c3ce", 0.8)
+    # pilares
+    for x in xs:
+        for y in ys:
+            s.rect(*P(x - 0.0785, y + 0.0765), 0.157 * k, 0.153 * k, "#111", 1, "#222")
+    # contraventamentos
+    for y in (ys[0], ys[-1]):
+        for i in range(2):
+            s.line(*P(xs[i], y - (0.12 if y < 0 else -0.12)), *P(xs[i + 1], y - (0.12 if y < 0 else -0.12)), "#c0392b", 0.8, "6,3")
+    for x in (xs[0], xs[-1]):
+        for i in range(2):
+            s.line(*P(x + (0.12 if x < 79 else -0.12), ys[i]), *P(x + (0.12 if x < 79 else -0.12), ys[i + 1]), "#c0392b", 0.8, "6,3")
+    # caixa
+    s.circ(*P(X_CAIXA, 0), 2.0 * k, "#1f6fb2", 1.3, "none", dash="10,5")
+    s.t(*P(X_CAIXA - 0.9, 1.25), "Projeção da caixa Ø 4,00", 10, c="#1f6fb2")
+    # plataforma
+    s.rect(*P(81.86, ys[-1]), (82.95 - 81.86) * k, (ys[-1] - ys[0]) * k, "#b7791f", 0.9, "#f2d98d", 0.5)
+    s.t(*P(81.95, 0.25), "Plataforma", 9.5, c="#7a5300")
+    s.t(*P(81.95, 0.05), "grade 113,50", 9.5, c="#7a5300")
+    # cotas
+    y_c = P(0, ys[0])[1] + 34
+    for i in range(2):
+        s.cota(P(xs[i], 0)[0], y_c, P(xs[i + 1], 0)[0], y_c, "2,20", 14)
+    s.cota(P(xs[0], 0)[0], y_c + 24, P(xs[-1], 0)[0], y_c + 24, "4,40 (deck)", 14)
+    x_c = P(xs[0], 0)[0] - 40
+    for i in range(2):
+        s.cota(x_c, P(0, ys[i])[1], x_c, P(0, ys[i + 1])[1], "2,20", -14)
+    s.cota(P(EST["xs_j"][0], 0)[0], P(0, ys[-1])[1] - 26, P(EST["xs_j"][1], 0)[0], P(0, ys[-1])[1] - 26, "0,44", -10)
+    s.t(P(xs[0], 0)[0], P(0, ys[-1])[1] - 50, f"Secundárias {EST['perfil_joist']} @ 0,44 (11×)", 10)
+    s.t(P(xs[0], 0)[0], P(0, ys[0])[1] + 92, f"Principais {EST['perfil_viga']} (3×, direção X); pilares {EST['perfil_pilar']} (9×);", 10)
+    s.t(P(xs[0], 0)[0], P(0, ys[0])[1] + 106, "contraventamento Ø16 em X nas 4 faces (vermelho tracejado); plataforma de serviço a leste.", 10)
+
+    # ------------------- elevação (corte A-A, ao longo de X)
+    kz = 62.0
+    ex0, ez0 = 760, 760
+
+    def E(x, z):
+        return ex0 + (x - 76.4) * kz, ez0 - (z - 111.4) * kz
+    s.t(760, 70, "ELEVAÇÃO SUL (vista de Y−) — escala 1:65", 11, wgt="bold")
+    # terreno e radier
+    s.line(*E(75.8, 112.0), *E(85.5, 112.0), "#6b7a5c", 1.6)
+    s.rect(*E(76.9, 112.02), Lr * kz, hr * kz, "#777", 0.9, "#ddd", 1)
+    for x in xs + [82.9]:
+        s.rect(*E(x - 0.25, 112.12), 0.5 * kz, 0.10 * kz, "#555", 0.7, "#bbb", 1)
+    zbv = TANQUE["cota_base"] - ESTR["chapa_piso_mm"] / 1000 - EST["d_joist"] - EST["d_viga"]
+    for x in xs:
+        s.rect(*E(x - 0.0785, zbv), 0.157 * kz, (zbv - 112.17) * kz, "#222", 0.8, "#55606c", 1)
+    s.rect(*E(xs[0] - 0.07, zbv + EST["d_viga"]), (4.54) * kz, EST["d_viga"] * kz, "#222", 0.8, "#8794a3", 1)
+    s.rect(*E(xs[0] - 0.05, zbv + EST["d_viga"] + EST["d_joist"]), 4.5 * kz, EST["d_joist"] * kz, "#222", 0.6, "#b9c3ce", 1)
+    s.rect(*E(xs[0], 113.5), 4.4 * kz, 0.0095 * kz + 1, "#111", 0.5, "#111")
+    for i in range(2):
+        s.line(*E(xs[i], 112.25), *E(xs[i + 1], zbv - 0.08), "#c0392b", 0.9)
+        s.line(*E(xs[i], zbv - 0.08), *E(xs[i + 1], 112.25), "#c0392b", 0.9)
+    s.rect(*E(77.6, 118.0), 4.0 * kz, 4.5 * kz, "#1f6fb2", 1.2, "#dbe8f5", 0.6, "8,4")
+    s.t(*E(78.3, 116.2), "Caixa 50 m³ (dados do fornecedor a confirmar)", 10, c="#1f6fb2")
+    # plataforma + escada + patamar
+    s.rect(*E(81.86, 113.5), 1.09 * kz, 0.03 * kz + 1, "#7a5300", 0.8, "#d6a92b")
+    s.line(*E(82.9, 112.17), *E(82.9, 113.35), "#222", 2)
+    s.pl([E(82.95, 113.5 + 1.1), E(82.95, 113.5)], "#d6a92b", 1.4)
+    s.rect(*E(81.45, 118.10), (83.42 - 81.45) * kz, 0.05 * kz + 1, "#7a5300", 0.8, "#d6a92b")
+    s.line(*E(83.40, 112.0), *E(83.40, 119.2), "#b7791f", 1.6)
+    s.line(*E(83.2, 112.12), *E(83.2, 118.05), "#b7791f", 1.0)
+    s.t(*E(83.55, 117.6), "Patamar 118,10 + escada", 9.5, c="#7a5300")
+    s.t(*E(83.55, 117.3), "marinheiro c/ gaiola (PEND.)", 9.5, c="#7a5300")
+    # níveis
+    xr = E(85.3, 0)[0]
+    for z, txt in [(112.0, "112,00 terreno/topo radier"), (112.12, "112,12 topo pedestal"), (113.5, "113,50 base da caixa"),
+                   (118.0, "118,00 topo da caixa"), (118.10, "")]:
+        if txt:
+            s.nivel(xr, E(0, z)[1], txt)
+    s.cota(E(76.6, 0)[0], E(0, 112.0)[1], E(76.6, 0)[0], E(0, 113.5)[1], "1,50", -12)
+    s.cota(E(76.6, 0)[0], E(0, 113.5)[1], E(76.6, 0)[0], E(0, 118.0)[1], "4,50", -12)
+    s.cota(E(76.9, 0)[0], E(0, 111.62)[1] + 16, E(76.9 + Lr, 0)[0], E(0, 111.62)[1] + 16, f"{br(Lr)} radier", 12)
+
+    # ------------------- detalhe placa de base
+    kd = 1.1  # px/mm
+    dx0, dy0 = 90, 880
+    s.t(dx0, dy0 - 228, "DETALHE 1 — BASE DO PILAR (1:10)", 11, wgt="bold")
+    s.rect(dx0, dy0 - 150, 300 * kd, 300 * kd * 0.45, "#222", 1, "#ccc")
+    s.t(dx0 + 340, dy0 - 120, "Placa 300×300×22,4 A36; 4 chumbadores M20 F1554 Gr36,", 10)
+    s.t(dx0 + 340, dy0 - 106, "ancoragem ≥ 400 mm com porca/placa na ponta; graute 30 mm;", 10)
+    s.t(dx0 + 340, dy0 - 92, "solda filete 6 mm contorno (fábrica); galvanização a fogo após solda;", 10)
+    s.t(dx0 + 340, dy0 - 78, "pedestal 50×50 (arranque 4 Ø12,5) sobre radier.", 10)
+    s.t(dx0 + 340, dy0 - 56, "Ligações: viga principal × pilar = chapa de topo 250×250×16 + 4 M16;", 10)
+    s.t(dx0 + 340, dy0 - 42, "secundária × principal = 4 M16; diagonais Ø16 c/ esticador, gusset 8 mm;", 10)
+    s.t(dx0 + 340, dy0 - 28, "chapa de piso = M12 cabeça escareada @300; 8 olhais de ancoragem da caixa.", 10)
+    for xx in (40, 260):
+        s.line(dx0 + xx * kd, dy0 - 150, dx0 + xx * kd, dy0 - 150 + 135 * kd * 0.45 * 2.2, "#c0392b", 1.4)
+    s.rect(dx0 + (150 - 78) * kd, dy0 - 150 - 60, 157 * kd, 60, "#222", 1, "#55606c")
+    s.cota(dx0, dy0 - 150 + 300 * kd * 0.45 + 4, dx0 + 300 * kd, dy0 - 150 + 300 * kd * 0.45 + 4, "300 mm", 12)
+    # tabela de perfis
+    s.carimbo(["Notas: 1) Aço: perfis ASTM A572 Gr50; chapas/barras ASTM A36; parafusos ASTM F3125 A325 galv.",
+               "2) Dimensões nominais dos perfis a confirmar no catálogo/NBR 15980:2024. Massa estimada ~4,1 t.",
+               "3) Fundação PRELIMINAR sem sondagem — não construir sem projeto executivo de fundações.",
+               "4) Proteção: galvanização a fogo (NBR 6323 / ISO 1461); retoques com tinta rica em zinco."])
+    s.salvar("DES-03_estrutura_fundacao.svg")
+
+
+# ====================================================================== DES-04 arranjo da área
+def des04():
+    s = SVG(1500, 980, "Arranjo da área da caixa", "DES-04", "1:60")
+    s.t(30, 36, "DES-04 — ARRANJO DA ÁREA DA CAIXA, ABRIGO E INTERFACES (planta, projeção superior)", 13, wgt="bold")
+    k = 78.0
+    ox, oy = 70 - 75.2 * k, 90 + 4.7 * k
+
+    def P(x, y):
+        return ox + x * k, oy - y * k
+    comps = CP.construir()
+    ordem = ["fundacao", "civil", "estrutura", "acesso", "drenagem", "tub_p1", "tub_casa", "eletrica", "equip", "caixa", "zonas"]
+    for cat in ordem:
+        for c in comps:
+            if c["cat"] != cat or c["tag"] in ("TER-01", "AREA-8x8", "AREA-AMP"):
+                continue
+            col = COR[cat]
+            for p in c["prims"]:
+                if p["t"] == "cyl":
+                    a, b = p["a"], p["b"]
+                    if math.hypot(a[0] - b[0], a[1] - b[1]) < 1e-6 and c["zona"]:
+                        s.circ(*P(a[0], a[1]), p["r"] * k, col, 1.0, col, 0.06, "4,3")
+                    elif math.hypot(a[0] - b[0], a[1] - b[1]) < 1e-6:
+                        s.circ(*P(a[0], a[1]), max(p["r"] * k, 1.5), col, 0.8, col if c["tag"] != "TQ-101" else "none",
+                               0.25 if c["tag"] == "TQ-101" else 0.7, "8,4" if c["tag"] == "TQ-101" else None)
+                    else:
+                        s.line(*P(a[0], a[1]), *P(b[0], b[1]), col, max(1.0, 2 * p["r"] * k) if p["r"] < 0.08 else 2, op=0.9)
+                elif p["t"] == "box":
+                    (x0, y0, _), (x1, y1, _) = p["min"], p["max"]
+                    xa, ya = P(x0, y1)
+                    xb, yb = P(x1, y0)
+                    if c["zona"]:
+                        s.rect(xa, ya, xb - xa, yb - ya, col, 1.0, col, 0.10, "4,3")
+                    else:
+                        s.rect(xa, ya, xb - xa, yb - ya, col, 0.6, col, 0.28 if cat in ("fundacao", "civil") else 0.55)
+    # limites de área
+    s.rect(*P(76, 4), 8 * k, 8 * k, "#111", 2.0, "none", dash="14,6")
+    s.rect(*P(84, 4), 4.5 * k, 8 * k, "#c2255c", 1.6, "none", dash="4,4")
+    s.t(*P(76.1, 4.15), "ÁREA DISPONÍVEL 8 × 8 m (cliente)", 11, wgt="bold")
+    s.t(*P(84.1, 4.15), "AMPLIAÇÃO PROPOSTA 4,5 × 8 m", 11, wgt="bold", c="#c2255c")
+    s.cota(*P(76, -4), *P(84, -4), "8,00", 24)
+    s.cota(*P(84, -4), *P(88.5, -4), "4,50", 24)
+    s.cota(*P(76, -4), *P(76, 4), "8,00", -24)
+    # rótulos
+    lb = [((79.6, 0.9), (77.0, 3.4), "TQ-101 caixa Ø4,00 (projeção)"),
+          ((81.95, -0.3), (78.3, -3.3), "N2 saída → V-201 → TB-201 sucção booster"),
+          ((81.95, -1.0), (77.2, -4.6), "N3 dreno → V-301/V-302 → CP-301"),
+          ((83.7, -1.5), (84.3, -3.4), "N4 extravasor DN100 → CP-301 (sep. atmosférica)"),
+          ((82.4, 0.0), (82.3, 3.4), "PL-01 plataforma 113,50 + ZN-01 faixa livre 0,70"),
+          ((83.6, 0.9), (85.3, 2.8), "EM-01 escada marinheiro + patamar PT-01 (118,10)"),
+          ((82.78, 1.8), (80.6, 3.0), "Prumada P-101 → N1 (teto)"),
+          ((82.4, -3.0), (79.0, -5.0), "ES-01 escada 42° + ZN-08 pé da escada"),
+          ((85.6, -0.8), (86.0, -2.7), "SK-201 booster duplex + ZN-05"),
+          ((86.3, 0.75), (87.0, 2.0), "QCB-01 + ZN-02 (1,0 m livre)"),
+          ((85.2, 0.5), (85.0, 3.4), "F-101 filtro + FQ-101"),
+          ((87.15, -0.9), (87.6, -3.0), "CL-101 cloração (compart. separado)"),
+          ((88.5, 3.5), (86.2, 3.9), "QE-EX quadro existente (a levantar)")]
+    for (x, y), (tx, ty), txt in lb:
+        s.chamada(*P(x, y), *P(tx, ty), txt, 10)
+    # legenda
+    lx, ly = 60, 820
+    for i, (cat, (nome, col)) in enumerate(CP.CATEGORIAS.items()):
+        if cat in ("terreno", "rio", "casa"):
+            continue
+        xx = lx + (i % 4) * 250
+        yy = ly + (i // 4) * 18
+        s.rect(xx, yy - 9, 14, 10, col, 0.6, col, 0.6)
+        s.t(xx + 20, yy, nome, 10)
+    s.carimbo(["Notas: 1) Gerado da mesma geometria do modelo 3D (componentes.py); bocais da caixa em posição HIPOTÉTICA.",
+               "2) Retângulos tracejados verdes = zonas livres obrigatórias (circulação, operação, subida, remoção).",
+               "3) Içamento da caixa por guindaste: área de patolamento e acesso do caminhão FORA da área — definir em campo.",
+               "4) Descargas de água a ≥ 10 m da fundação (risco de solo colapsível)."])
+    s.salvar("DES-04_arranjo_area_caixa.svg")
+
+
+# ====================================================================== DES-05 fluxograma P&ID
+def des05():
+    s = SVG(1500, 900, "Fluxograma de engenharia", "DES-05", "sem escala")
+    s.t(30, 36, "DES-05 — FLUXOGRAMA DE PROCESSO E INSTRUMENTAÇÃO (simplificado)", 13, wgt="bold")
+    C1, C2, CD, CE = COR["tub_p1"], COR["tub_casa"], COR["drenagem"], "#f08a24"
+
+    def bomba(x, y, tag, sub=""):
+        s.circ(x, y, 16, "#222", 1.4, "#fff")
+        s.poly([(x - 10, y + 10), (x + 14, y), (x - 10, y - 10)], "#222", 1, "none")
+        s.t(x, y + 32, tag, 10.5, "middle", "bold")
+        if sub:
+            s.t(x, y + 45, sub, 9, "middle", c="#444")
+
+    def valv(x, y, tag, tipo="esfera", vert=False):
+        if vert:
+            s.poly([(x - 7, y - 10), (x + 7, y - 10), (x - 7, y + 10), (x + 7, y + 10)], "#222", 1, "#fff")
+        else:
+            s.poly([(x - 10, y - 7), (x - 10, y + 7), (x + 10, y - 7), (x + 10, y + 7)], "#222", 1, "#fff")
+        if tipo == "retencao":
+            s.line(x - 10, y + 7, x + 10, y - 7, "#222", 1.6)
+        s.t(x, y - 12, tag, 9, "middle")
+
+    def inst(x, y, tag, ligar=None):
+        s.circ(x, y, 14, "#222", 1, "#fff")
+        a, b = tag.split("-") if "-" in tag else (tag, "")
+        s.t(x, y - 1, a, 8.5, "middle", "bold")
+        s.t(x, y + 9, b, 8, "middle")
+        if ligar:
+            s.line(x, y + 14 if ligar[1] > y else y - 14, ligar[0], ligar[1], "#222", 0.8, "3,2")
+
+    # Rio e captação
+    s.rect(40, 180, 90, 200, "#2f75b5", 1, "#9cc3e6", 0.6)
+    s.t(85, 170, "RIO", 11, "middle", "bold", "#1f4e79")
+    s.t(85, 398, "97,50 / 100,00 / 102,00", 9, "middle", c="#1f4e79")
+    s.rect(110, 290, 70, 40, "#c77d2e", 1.2, "#f6dfc5")
+    s.t(145, 345, "TC-101 camisa", 9, "middle")
+    s.t(145, 356, "+ tela inox", 9, "middle")
+    bomba(145, 310, "", "")
+    s.t(145, 275, "P-101", 10.5, "middle", "bold")
+    inst(145, 230, "LSL-100", (145, 290))
+    s.pl([(161, 310), (230, 310)], C1, 2.2)
+    valv(250, 310, "CV-101", "retencao")
+    s.pl([(260, 310), (320, 310)], C1, 2.2)
+    s.rect(320, 280, 150, 60, "#888", 0.8, "none", dash="4,3")
+    s.t(395, 352, "CX-101 (crista, cota > 102)", 9, "middle")
+    valv(345, 310, "V-101")
+    valv(390, 310, "CV-102", "retencao")
+    inst(430, 268, "PI-101", (430, 310))
+    s.pl([(355, 310), (380, 310)], C1, 2.2)
+    s.pl([(400, 310), (560, 310)], C1, 2.2)
+    s.t(515, 328, "TB-101 DE40 — 115 m", 9.5, "middle", c=C1)
+    # filtro
+    s.rect(560, 285, 40, 60, "#222", 1.2, "#fff")
+    s.line(560, 345, 600, 285, "#222", 0.6)
+    s.t(580, 360, "F-101", 10, "middle", "bold")
+    inst(580, 240, "PDSH-101", (580, 285))
+    s.pl([(580, 345), (580, 420)], CD, 1.4, dash="6,3")
+    s.t(585, 435, "retrolavagem → CP-301", 9, c=CD)
+    s.pl([(600, 310), (650, 310)], C1, 2.2)
+    s.rect(650, 298, 30, 24, "#222", 1, "#fff")
+    s.t(665, 314, "FQ", 9, "middle", "bold")
+    s.t(665, 340, "FQ-101", 9, "middle")
+    s.pl([(680, 310), (760, 310)], C1, 2.2)
+    # cloração
+    s.rect(700, 380, 40, 50, "#222", 1, "#fff")
+    s.t(720, 445, "CL-101 + DP-101", 9, "middle")
+    s.pl([(720, 380), (720, 310)], "#222", 1, dash="2,2")
+    s.t(726, 360, "hipoclorito", 8.5)
+    # caixa
+    s.rect(780, 170, 170, 260, "#1f6fb2", 1.6, "#dbe8f5", 0.7)
+    s.t(865, 160, "TQ-101  50 m³", 11, "middle", "bold")
+    lv = [("N1 entrada livre 117,80", 117.80), ("extravasor 117,61", NIVEIS["extravasor_N4_soleira"]), ("LAHH 117,50", 117.50),
+          ("P-101 desliga 117,35", 117.35), ("P-101 liga 116,80", 116.80), ("LAL 114,50", 114.50), ("LSLL 114,15", 114.15),
+          ("N2 saída 113,80", 113.80), ("fundo 113,55", 113.55)]
+    ylab_prev = -1e9
+    for txt, z in lv:
+        y = 430 - (z - 113.55) / (118.0 - 113.55) * 260
+        s.line(780, y, 950, y, "#1f4e79", 0.6, "3,2")
+        yl = max(y + 3, ylab_prev + 11)
+        s.line(950, y, 958, yl - 3, "#1f4e79", 0.4)
+        s.t(960, yl, txt, 8.5, c="#1f4e79")
+        ylab_prev = yl
+    s.pl([(760, 310), (760, 190), (800, 190), (800, 205)], C1, 2.2)
+    inst(760, 120, "LT-101", (800, 170))
+    inst(820, 120, "LSHH-101", (830, 170))
+    inst(880, 120, "LSLL-101", (870, 170))
+    # extravasor e dreno
+    yo = 430 - (NIVEIS["extravasor_N4_soleira"] - 113.55) / 4.45 * 260
+    s.pl([(950, yo), (1030, yo), (1030, 560)], CD, 2)
+    s.pl([(950, 420), (990, 420), (990, 470)], CD, 2)
+    valv(990, 450, "V-301", vert=True)
+    valv(990, 500, "V-302 (estrang.)", vert=True)
+    s.pl([(990, 510), (990, 560)], CD, 2)
+    s.rect(960, 560, 100, 40, "#222", 1, "#eee")
+    s.t(1010, 584, "CP-301", 10, "middle", "bold")
+    s.t(1065, 548, "sep. atmosférica", 8.5)
+    s.pl([(1060, 580), (1140, 580)], CD, 2)
+    s.rect(1140, 560, 90, 40, "#222", 1, "#eee")
+    s.t(1185, 584, "CD-301", 10, "middle", "bold")
+    s.pl([(1230, 580), (1290, 580)], CD, 2)
+    s.rect(1290, 565, 110, 30, "#222", 1, "#e9f2df")
+    s.t(1345, 584, "VI-301 vala", 10, "middle", "bold")
+    s.t(1185, 620, "decantação + descloração → infiltração/dispersão (aprovação ambiental)", 9, "middle", c=CD)
+    # saída para booster
+    s.pl([(780, 415), (720, 415), (720, 640), (660, 640)], C2, 2.2)
+    valv(745, 415, "V-201")
+    s.rect(705, 520, 30, 20, "#222", 1, "#fff")
+    s.t(745, 534, "JF-201 / Y-201", 8.5)
+    # booster duplex
+    for i, y in enumerate((610, 690)):
+        s.pl([(660, 640), (640, 640), (640, y), (600, y)], C2, 2)
+        bomba(580, y, f"P-201{'AB'[i]}", "0,75 kW + inversor")
+        s.pl([(564, y), (520, y), (520, 650)], C2, 2)
+        valv(540, y, "CV", "retencao")
+    s.pl([(520, 650), (430, 650)], C2, 2.2)
+    s.circ(470, 690, 14, "#222", 1, "#fff")
+    s.t(470, 694, "PV", 9, "middle", "bold")
+    s.t(470, 722, "PV-201", 9, "middle")
+    s.line(470, 676, 470, 650, "#222", 1)
+    inst(470, 600, "PT-201", (470, 650))
+    valv(410, 650, "V-203")
+    s.pl([(400, 650), (230, 650)], C2, 2.2)
+    s.t(315, 668, "TB-202 PEAD DE40 — 160 m (NÃO POTÁVEL, lilás)", 9.5, "middle", c=C2)
+    s.rect(150, 620, 80, 60, "#8b7d66", 1.2, "#f4efe6")
+    s.t(190, 645, "CE-01", 10, "middle", "bold")
+    s.t(190, 660, "VE-01", 9, "middle")
+    s.line(140, 600, 140, 720, "#c2255c", 2, "8,4")
+    s.t(135, 740, "LIMITE DO ESCOPO", 9.5, "end", "bold", "#c2255c")
+    s.t(60, 760, "→ instalação interna (terceiros): vasos, torneiras de uso restrito, irrigação", 9, c="#555")
+    # QCB
+    s.rect(1100, 180, 200, 150, "#f08a24", 1.4, "#fff4e8")
+    s.t(1200, 200, "QCB-01 (CLP + relés)", 11, "middle", "bold")
+    for i, txt in enumerate(["soft-starter P-101 + relé subcarga", "inversores P-201A/B (alternância)", "intertravamentos físicos LSHH/LSLL",
+                             "DP-101 habilitada só c/ P-101", "alarme local + remoto (casa/GSM)", "registro de volume (FQ-101)"]):
+        s.t(1110, 222 + i * 16, "• " + txt, 9.5)
+    for x, y in [(760, 106), (820, 106), (880, 106), (580, 226), (145, 216), (470, 586)]:
+        s.pl([(x, y), (x, 90), (1200, 90), (1200, 180)], CE, 0.8, dash="2,3")
+    s.t(1210, 104, "sinais de instrumentação/comando (tracejado laranja)", 9, c=CE)
+    # tabela lógica
+    tx, ty = 1100, 380
+    s.t(tx, ty, "LÓGICA PRINCIPAL", 10.5, wgt="bold")
+    for i, txt in enumerate(["P-101 LIGA: LT < 116,80 e permissivos OK",
+                             "P-101 DESLIGA: LT ≥ 117,35 ou LSHH ou LSL-100",
+                             "  ou subcarga (marcha a seco) ou ΔP filtro alto",
+                             "  ou tempo máx. de operação (vazamento)",
+                             "Rearme subcarga: 3 tentativas/30 min → bloqueio",
+                             "P-201 HABILITADO: LT > 114,15 e LSLL OK",
+                             "P-201 controle: pressão constante 32,5 m.c.a.",
+                             "Falta de energia: tudo para; caixa mantém",
+                             "  volume; casa SEM água até retorno/gerador"]):
+        s.t(tx, ty + 18 + i * 15, txt, 9.5)
+    s.carimbo(["Notas: 1) Tags e níveis conforme MC-01; níveis dependem do desenho certificado da caixa.",
+               "2) Nenhuma interligação com o sistema potável. Eventual reposição potável só com separação atmosférica na caixa."])
+    s.salvar("DES-05_fluxograma_PID.svg")
+
+
+# ====================================================================== DES-06 unifilar
+def des06():
+    s = SVG(1500, 820, "Diagrama unifilar", "DES-06", "sem escala")
+    s.t(30, 36, "DES-06 — DIAGRAMA UNIFILAR PRELIMINAR (380/220 V, 60 Hz — a confirmar)", 13, wgt="bold")
+
+    def disj(x, y, txt):
+        s.line(x, y, x, y + 14, "#222", 1.4)
+        s.line(x, y + 14, x + 10, y + 30, "#222", 1.4)
+        s.line(x, y + 34, x, y + 48, "#222", 1.4)
+        s.t(x + 14, y + 28, txt, 9.5)
+
+    def motor(x, y, txt):
+        s.circ(x, y, 18, "#222", 1.4, "#fff")
+        s.t(x, y + 4, "M", 12, "middle", "bold")
+        s.t(x, y + 34, txt, 9.5, "middle")
+
+    s.rect(80, 70, 220, 60, "#888", 1, "#f3f3f3", dash="5,3")
+    s.t(190, 95, "QE existente (a levantar)", 10.5, "middle", "bold")
+    s.t(190, 112, "capacidade, Icc, esquema TN/TT?", 9, "middle")
+    disj(190, 130, "Disj. 3P 16 A curva C")
+    s.line(190, 178, 190, 230, "#222", 2)
+    s.t(198, 210, "4×4 mm² + PE, 0,6/1 kV, L ≈ 30 m (hip.), eletroduto enterrado", 9.5)
+    s.rect(60, 230, 1380, 470, "#f08a24", 1.4, "#fffaf3")
+    s.t(70, 250, "QCB-01 — IP65, NBR IEC 61439, com chave geral bloqueável (NR-10), DPS classe II, botão de emergência (NR-12)", 10.5, wgt="bold")
+    disj(190, 258, "Seccionadora geral 3P 25 A")
+    s.line(110, 320, 1400, 320, "#222", 3)
+    s.t(1405, 324, "barramento 3F+N+PE", 9)
+    s.line(1360, 320, 1360, 345, "#222", 1.2)
+    s.rect(1340, 345, 40, 26, "#222", 1, "#fff")
+    s.t(1360, 362, "DPS", 9, "middle", "bold")
+    circ = [
+        (170, "P-101 captação", ["Disj.-motor 2,5–4 A", "Relé falta de fase", "Soft-starter (rampas)", "Relé subcarga", "DR 30 mA (recom.)"],
+         "Cabo submersível 4×4 mm² ≈ 130 m", "1,1 kW (hip.)"),
+        (430, "P-201A booster", ["Disj.-motor 1,6–2,5 A", "Inversor 0,75 kW", "DR compatível (tipo B/F)"], "4×2,5 mm² ≈ 5 m", "0,75 kW"),
+        (650, "P-201B reserva", ["Disj.-motor 1,6–2,5 A", "Inversor 0,75 kW", "DR compatível (tipo B/F)"], "4×2,5 mm² ≈ 5 m", "0,75 kW"),
+        (870, "Dosadora DP-101 + filtro F-101", ["Disj. 1P 6 A", "DR 30 mA", "Interlock c/ P-101"], "2,5 mm²", "≈ 80 W"),
+        (1060, "Comando 24 Vcc", ["Disj. 1P 6 A", "Fonte 24 Vcc", "CLP + GSM + nível"], "sinais 4–20 mA / DI", "≈ 100 W"),
+        (1250, "Tomada + iluminação", ["Disj. 1P 16 A", "DR 30 mA"], "2,5 mm²", "1,0 kW"),
+    ]
+    for x, nome, prot, cabo, pot in circ:
+        s.line(x, 320, x, 340, "#222", 1.4)
+        disj(x, 340, prot[0])
+        for i, ptxt in enumerate(prot[1:]):
+            s.rect(x - 8, 400 + i * 30, 16, 20, "#222", 1, "#fff")
+            s.t(x + 14, 414 + i * 30, ptxt, 9.5)
+        y_end = 400 + (len(prot) - 1) * 30 + 10
+        s.line(x, 388, x, 400, "#222", 1.4)
+        s.line(x, y_end, x, 640, "#222", 1.4)
+        s.t(x + 6, 628, cabo, 9, c="#444")
+        if "P-" in nome:
+            motor(x, 668, pot)
+        else:
+            s.rect(x - 18, 652, 36, 30, "#222", 1, "#fff")
+            s.t(x, 700, pot, 9.5, "middle")
+        s.t(x, 300, nome, 10, "middle", "bold")
+    s.line(80, 740, 1400, 740, "#2b8a3e", 2)
+    s.t(80, 758, "PE — barra de equipotencialização: estrutura metálica, carcaças, QCB, tubulações metálicas, eletrodo de fundação no radier (+ SPDA se a análise de risco NBR 5419-2 exigir)", 9.5, c="#2b8a3e")
+    s.carimbo(["Notas: 1) Correntes estimadas com rendimentos/cosφ HIPOTÉTICOS — refazer com dados de placa.",
+               "2) Verificar no QE existente: capacidade livre, proteção a montante, seletividade, Icc e esquema de aterramento.",
+               "3) Entrada opcional para gerador ~5 kVA com chave reversora intertravada."])
+    s.salvar("DES-06_unifilar.svg")
+
+
+# ====================================================================== DES-07 captação
+def des07():
+    s = SVG(1500, 820, "Captação — corte da margem", "DES-07", "1:50")
+    s.t(30, 36, "DES-07 — CAPTAÇÃO: CORTE PELO EIXO DO TUBO-CAMISA (hipóteses de leito e talude)", 13, wgt="bold")
+    k = 52.0
+    ox, oz = 120 + 8 * k, 690
+
+    def P(x, z):
+        return ox + x * k, oz - (z - 94.5) * k
+    terr = [(-8, 95.5), (-6, 95.5), (-2.25, 95.7), (0, 97.5), (8.25, 103.0), (14, 103.0 + 5.75 * 0.1328)]
+    s.poly([P(x, z) for x, z in terr] + [P(14, 94.5), P(-8, 94.5)], "#6b7a5c", 1.6, "#c9d2b8", 0.6)
+    for n, cor, txt in [(102.0, "#9cc3e6", "Nível máximo 102,00"), (100.0, "#5d9fd6", "Nível normal 100,00"), (97.5, "#2f75b5", "Nível mínimo 97,50")]:
+        xb = (n - 97.5) * 1.5
+        s.poly([P(-8, n), P(xb, n), P(-8, 94.5)][:2] + [P(-8, n)], cor, 1.6)
+        s.line(*P(-8, n), *P(xb, n), cor, 1.6)
+        s.nivel(*P(-7.5, n), txt)
+    s.poly([P(-8, 97.5), P(0, 97.5), P(-2.25, 95.7), P(-6, 95.5), P(-8, 95.5)], "none", 0, "#5d9fd6", 0.35)
+    # camisa
+    a, b = (-2.25, 96.1), (9.45, 103.8)
+    ang = math.atan2(b[1] - a[1], b[0] - a[0])
+    nx, nz = -math.sin(ang) * 0.1, math.cos(ang) * 0.1
+    s.poly([P(a[0] + nx, a[1] + nz), P(b[0] + nx, b[1] + nz), P(b[0] - nx, b[1] - nz), P(a[0] - nx, a[1] - nz)], "#c77d2e", 1.4, "#f6dfc5", 0.9)
+    # perfurações
+    for i in range(8):
+        t = 0.02 + i * 0.012
+        x = a[0] + (b[0] - a[0]) * t
+        z = a[1] + (b[1] - a[1]) * t
+        s.circ(*P(x, z), 2, "#c77d2e", 0.8, "#fff")
+    # bomba
+    pa = (a[0] + 0.25 * math.cos(ang), a[1] + 0.25 * math.sin(ang))
+    pb = (a[0] + 1.55 * math.cos(ang), a[1] + 1.55 * math.sin(ang))
+    s.line(*P(*pa), *P(*pb), "#d1495b", 8)
+    s.rect(*P(-2.8, 96.0), 1.1 * k, 0.45 * k, "#555", 1, "#aaa")
+    # caixa de válvulas
+    zt = CP.z_terreno(11.0)
+    s.rect(*P(10.6, zt + 0.25), 0.8 * k, 0.85 * k, "#444", 1.2, "#eee")
+    s.line(*P(9.45, 103.8), *P(10.6, zt - 0.3), COR["tub_p1"], 2)
+    s.line(*P(11.4, zt - 0.3), *P(14, CP.z_terreno(14) - 0.7), COR["tub_p1"], 2)
+    # cotas
+    s.nivel(*P(8.25, 103.0), "crista 103,00 (cliente)")
+    s.nivel(*P(9.45, 103.8), "tampa 103,80")
+    s.nivel(*P(-2.25, 95.7), "leito hip. ≤ 95,70")
+    s.cota(*P(-1.6, 96.3), *P(-1.6, 97.5), "1,20 submerg.", -40)
+    s.cota(*P(0, 94.9), *P(8.25, 94.9), "8,25 (talude 1V:1,5H hip.)", 12)
+    s.cota(*P(8.25, 102.0), *P(8.25, 103.0), "1,00 borda livre", 30)
+    # chamadas
+    s.chamada(*P(-1.0, 96.75), *P(-7.6, 101.3), anc="start", txt="P-101 bomba submersa 4\" sobre patim, dentro da camisa;\nmotor abaixo das fendas (fluxo de arrefecimento);\ncabo de içamento inox + cabo elétrico contínuo")
+    s.chamada(*P(-2.4, 96.2), *P(-7.6, 94.9), anc="start", txt="BL-101 bloco/gabião: extremidade 0,3 m acima do leito (evita areia)")
+    s.chamada(*P(3, 98.75), *P(2.5, 104.8), "TC-101 PEAD DE200 ancorado no talude, trecho final perfurado\n(fendas + tela inox ~2 mm [H]); enrocamento/geotêxtil de proteção")
+    s.chamada(*P(11, zt), *P(12.5, 105.5), "CX-101 caixa de válvulas acima da cheia\n(V-101, CV-102, PI-101, união) — retirada da\nbomba pelo eixo da camisa (ZN-06 livre)")
+    s.carimbo(["Notas: 1) Leito, largura do rio, talude e estabilidade são HIPÓTESES — batimetria e sondagem obrigatórias.",
+               "2) Se o leito for mais alto que 95,70: poço escavado no leito ou poço/galeria de infiltração na margem.",
+               "3) Intervenção em APP de baixo impacto (Lei 12.651/2012 art. 3º X b) requer autorização (CETESB) e outorga/dispensa (SP Águas).",
+               "4) Inspeção da tela/limpeza: retirar a bomba com guincho manual pelo eixo do tubo-camisa."])
+    s.salvar("DES-07_captacao_corte.svg")
+
+
+if __name__ == "__main__":
+    for fn in (des01, des02, des03, des04, des05, des06, des07):
+        fn()
+        print("[ok]", fn.__name__)

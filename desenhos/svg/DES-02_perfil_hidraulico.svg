@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 760" width="1500" height="760" font-family="Segoe UI, Helvetica, Arial, sans-serif"><rect x="0" y="0" width="1500" height="760" fill="#ffffff"/><rect x="5" y="5" width="1490" height="750" fill="none" stroke="#222" stroke-width="1.5"/><text x="30.0" y="36.0" font-size="13" text-anchor="start" font-weight="bold" fill="#111">DES-02 — PERFIL LONGITUDINAL E LINHAS PIEZOMÉTRICAS (condições de projeto)</text>
+<line x1="60.0" y1="640.0" x2="1442.4" y2="640.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="643.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">94</text>
+<line x1="60.0" y1="618.0" x2="1442.4" y2="618.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="621.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">96</text>
+<line x1="60.0" y1="596.0" x2="1442.4" y2="596.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="599.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">98</text>
+<line x1="60.0" y1="574.0" x2="1442.4" y2="574.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="577.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">100</text>
+<line x1="60.0" y1="552.0" x2="1442.4" y2="552.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="555.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">102</text>
+<line x1="60.0" y1="530.0" x2="1442.4" y2="530.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="533.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">104</text>
+<line x1="60.0" y1="508.0" x2="1442.4" y2="508.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="511.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">106</text>
+<line x1="60.0" y1="486.0" x2="1442.4" y2="486.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="489.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">108</text>
+<line x1="60.0" y1="464.0" x2="1442.4" y2="464.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="467.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">110</text>
+<line x1="60.0" y1="442.0" x2="1442.4" y2="442.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="445.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">112</text>
+<line x1="60.0" y1="420.0" x2="1442.4" y2="420.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="423.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">114</text>
+<line x1="60.0" y1="398.0" x2="1442.4" y2="398.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="401.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">116</text>
+<line x1="60.0" y1="376.0" x2="1442.4" y2="376.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="379.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">118</text>
+<line x1="60.0" y1="354.0" x2="1442.4" y2="354.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="357.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">120</text>
+<line x1="60.0" y1="332.0" x2="1442.4" y2="332.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="335.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">122</text>
+<line x1="60.0" y1="310.0" x2="1442.4" y2="310.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="313.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">124</text>
+<line x1="60.0" y1="288.0" x2="1442.4" y2="288.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="291.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">126</text>
+<line x1="60.0" y1="266.0" x2="1442.4" y2="266.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="269.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">128</text>
+<line x1="60.0" y1="244.0" x2="1442.4" y2="244.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="247.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">130</text>
+<line x1="60.0" y1="222.0" x2="1442.4" y2="222.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="225.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">132</text>
+<line x1="60.0" y1="200.0" x2="1442.4" y2="200.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="203.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">134</text>
+<line x1="60.0" y1="178.0" x2="1442.4" y2="178.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="181.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">136</text>
+<line x1="60.0" y1="156.0" x2="1442.4" y2="156.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="159.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">138</text>
+<line x1="60.0" y1="134.0" x2="1442.4" y2="134.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="137.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">140</text>
+<line x1="60.0" y1="112.0" x2="1442.4" y2="112.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="115.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">142</text>
+<line x1="60.0" y1="90.0" x2="1442.4" y2="90.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="93.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">144</text>
+<line x1="60.0" y1="68.0" x2="1442.4" y2="68.0" stroke="#e6e6e6" stroke-width="0.6" opacity="1"/>
+<text x="54.0" y="71.0" font-size="9" text-anchor="end" font-weight="normal" fill="#666">146</text>
+<line x1="60.0" y1="640.0" x2="60.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="60.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">-20</text>
+<line x1="168.0" y1="640.0" x2="168.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="168.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">0</text>
+<line x1="276.0" y1="640.0" x2="276.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="276.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">20</text>
+<line x1="384.0" y1="640.0" x2="384.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="384.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">40</text>
+<line x1="492.0" y1="640.0" x2="492.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="492.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">60</text>
+<line x1="600.0" y1="640.0" x2="600.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="600.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">80</text>
+<line x1="708.0" y1="640.0" x2="708.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="708.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">100</text>
+<line x1="816.0" y1="640.0" x2="816.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="816.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">120</text>
+<line x1="924.0" y1="640.0" x2="924.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="924.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">140</text>
+<line x1="1032.0" y1="640.0" x2="1032.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="1032.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">160</text>
+<line x1="1140.0" y1="640.0" x2="1140.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="1140.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">180</text>
+<line x1="1248.0" y1="640.0" x2="1248.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="1248.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">200</text>
+<line x1="1356.0" y1="640.0" x2="1356.0" y2="68.0" stroke="#f0f0f0" stroke-width="0.6" opacity="1"/>
+<text x="1356.0" y="654.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#666">220</text>
+<text x="751.2" y="670.0" font-size="10" text-anchor="middle" font-weight="normal" fill="#111">X ao longo do traçado (m)</text>
+<text x="25.0" y="354.0" font-size="10" text-anchor="middle" font-weight="normal" fill="#111" transform="rotate(-90 25.0 354.0)">Cota (m)</text>
+<line x1="60.0" y1="552.0" x2="204.4" y2="552.0" stroke="#9cc3e6" stroke-width="1.6" opacity="1"/>
+<line x1="60.0" y1="574.0" x2="188.2" y2="574.0" stroke="#5d9fd6" stroke-width="1.6" opacity="1"/>
+<line x1="60.0" y1="601.5" x2="168.0" y2="601.5" stroke="#2f75b5" stroke-width="1.6" opacity="1"/>
+<polygon points="76.2,552.0 71.2,544.0 81.2,544.0" stroke="#1f4e79" stroke-width="0.8" fill="#1f4e79" fill-opacity="1"/>
+<text x="84.2" y="550.0" font-size="10" text-anchor="start" font-weight="normal" fill="#1f4e79">máx 102,00</text>
+<polygon points="76.2,574.0 71.2,566.0 81.2,566.0" stroke="#1f4e79" stroke-width="0.8" fill="#1f4e79" fill-opacity="1"/>
+<text x="84.2" y="572.0" font-size="10" text-anchor="start" font-weight="normal" fill="#1f4e79">normal 100,00</text>
+<polygon points="76.2,601.5 71.2,593.5 81.2,593.5" stroke="#1f4e79" stroke-width="0.8" fill="#1f4e79" fill-opacity="1"/>
+<text x="84.2" y="599.5" font-size="10" text-anchor="start" font-weight="normal" fill="#1f4e79">mín 97,50</text>
+<polyline points="81.6,541.0 97.8,563.0 114.0,601.5 124.8,623.5 135.6,623.5 155.8,621.3 168.0,601.5 212.6,541.0 578.4,442.0 621.6,442.0 645.9,442.0 1356.0,354.0 1442.4,354.0" stroke="#6b7a5c" stroke-width="2" fill="none" opacity="1" stroke-linejoin="round"/>
+<polygon points="81.6,541.0 97.8,563.0 114.0,601.5 124.8,623.5 135.6,623.5 155.8,621.3 168.0,601.5 212.6,541.0 578.4,442.0 621.6,442.0 645.9,442.0 1356.0,354.0 1442.4,354.0 1442.4,640.0 60.0,640.0" stroke="none" stroke-width="0" fill="#c9d2b8" fill-opacity="0.35"/>
+<line x1="155.8" y1="616.9" x2="219.0" y2="532.2" stroke="#c77d2e" stroke-width="3" opacity="1"/>
+<circle cx="159.4" cy="612.5" r="4.0" stroke="#c77d2e" stroke-width="1" fill="#c77d2e" fill-opacity="1"/>
+<polyline points="232.8,543.2 243.6,540.3 254.4,537.4 265.2,534.5 276.0,531.5 286.8,528.6 297.6,525.7 308.4,522.8 319.2,519.8 330.0,516.9 340.8,514.0 351.6,511.1 362.4,508.2 373.2,505.2 384.0,502.3 394.8,499.4 405.6,496.5 416.4,493.5 427.2,490.6 438.0,487.7 448.8,484.8 459.6,481.8 470.4,478.9 481.2,476.0 492.0,473.1 502.8,470.2 513.6,467.2 524.4,464.3 535.2,461.4 546.0,458.5 556.8,455.5 567.6,452.6 578.4,449.7 589.2,449.7 600.0,449.7 610.8,449.7 621.6,449.7" stroke="#2f9e8f" stroke-width="1.4" fill="none" stroke-dasharray="5,3" opacity="1" stroke-linejoin="round"/>
+<polyline points="643.2,449.7 664.8,447.4 686.4,444.7 708.0,442.0 729.6,439.3 751.2,436.7 772.8,434.0 794.4,431.3 816.0,428.6 837.6,425.9 859.2,423.3 880.8,420.6 902.4,417.9 924.0,415.2 945.6,412.6 967.2,409.9 988.8,407.2 1010.4,404.5 1032.0,401.9 1053.6,399.2 1075.2,396.5 1096.8,393.8 1118.4,391.1 1140.0,388.5 1161.6,385.8 1183.2,383.1 1204.8,380.4 1226.4,377.8 1248.0,375.1 1269.6,372.4 1291.2,369.7 1312.8,367.1 1334.4,364.4" stroke="#8a4fbf" stroke-width="1.4" fill="none" stroke-dasharray="5,3" opacity="1" stroke-linejoin="round"/>
+<rect x="587.0" y="376.0" width="21.6" height="49.5" stroke="#5d6b7a" stroke-width="1" fill="#cfd8e3" fill-opacity="0.8"/>
+<rect x="586.0" y="425.5" width="23.8" height="16.5" stroke="#5d6b7a" stroke-width="0.8" fill="#5d6b7a" fill-opacity="0.4"/>
+<line x1="578.4" y1="383.2" x2="616.2" y2="383.2" stroke="#1f4e79" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<text x="619.2" y="386.2" font-size="9" text-anchor="start" font-weight="normal" fill="#1f4e79">P-101 desliga 117,35</text>
+<line x1="578.4" y1="418.3" x2="616.2" y2="418.3" stroke="#1f4e79" stroke-width="0.8" stroke-dasharray="3,2" opacity="1"/>
+<text x="619.2" y="421.3" font-size="9" text-anchor="start" font-weight="normal" fill="#1f4e79">LSLL 114,15 (booster para)</text>
+<rect x="1358.7" y="318.8" width="62.1" height="35.2" stroke="#8b7d66" stroke-width="1" fill="#e8dfcf" fill-opacity="0.9"/>
+<circle cx="1383.0" cy="326.5" r="4.0" stroke="#c2255c" stroke-width="1" fill="#c2255c" fill-opacity="1"/>
+<text x="1377.0" y="318.5" font-size="9" text-anchor="end" font-weight="normal" fill="#c2255c">ponto mais alto 122,50</text>
+<polyline points="159.4,245.9 628.1,302.3 628.1,368.3 604.3,378.2" stroke="#2f9e8f" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<text x="178.8" y="239.9" font-size="10" text-anchor="start" font-weight="bold" fill="#2f9e8f">LP P-101: Q = 3,0 m³/h, Hman = 32,3 m (rio mín., filtro sujo) → 129,8</text>
+<polyline points="633.5,418.3 633.5,80.8 1353.8,134.0 1383.0,161.5" stroke="#8a4fbf" stroke-width="2.2" fill="none" opacity="1" stroke-linejoin="round"/>
+<text x="708.0" y="72.8" font-size="10" text-anchor="start" font-weight="bold" fill="#8a4fbf">LP P-201 (2,16 m³/h, setpoint 32,5 m.c.a. na descarga) → 144,8</text>
+<line x1="1248.0" y1="161.5" x2="1442.4" y2="161.5" stroke="#c2255c" stroke-width="1" stroke-dasharray="4,3" opacity="1"/>
+<text x="1440.4" y="157.5" font-size="9.5" text-anchor="end" font-weight="normal" fill="#c2255c">LP requerida 137,50 (122,50 + 15)</text>
+<line x1="608.6" y1="383.2" x2="1442.4" y2="383.2" stroke="#888" stroke-width="1" stroke-dasharray="2,4" opacity="1"/>
+<text x="1059.0" y="396.2" font-size="9.5" text-anchor="middle" font-weight="normal" fill="#555">Nível máximo da caixa 117,35 &lt; piso da casa 120,00 → sem abastecimento por gravidade</text>
+<line x1="1428.4" y1="383.2" x2="1459.4" y2="383.2" stroke="#333" stroke-width="0.5" opacity="1"/>
+<line x1="1428.4" y1="161.5" x2="1459.4" y2="161.5" stroke="#333" stroke-width="0.5" opacity="1"/>
+<line x1="1456.4" y1="383.2" x2="1456.4" y2="161.5" stroke="#333" stroke-width="0.7" opacity="1"/>
+<line x1="1453.4" y1="386.2" x2="1459.4" y2="380.2" stroke="#333" stroke-width="1" opacity="1"/>
+<line x1="1453.4" y1="164.5" x2="1459.4" y2="158.5" stroke="#333" stroke-width="1" opacity="1"/>
+<text x="1452.4" y="272.3" font-size="10" text-anchor="middle" font-weight="normal" fill="#333" transform="rotate(-90 1452.4 272.3)">20,15 m</text>
+<rect x="1060.0" y="658.0" width="430.0" height="92.0" stroke="#222" stroke-width="1.2" fill="#fff" fill-opacity="1"/>
+<line x1="1060.0" y1="684.0" x2="1490.0" y2="684.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<line x1="1060.0" y1="718.0" x2="1490.0" y2="718.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<line x1="1360.0" y1="684.0" x2="1360.0" y2="750.0" stroke="#222" stroke-width="0.8" opacity="1"/>
+<text x="1068.0" y="676.0" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Perfil hidráulico</text>
+<text x="1068.0" y="699.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#111">Captação, caixa 50 m³ e abastecimento não potável — área rural, interior de SP</text>
+<text x="1068.0" y="712.0" font-size="9.5" text-anchor="start" font-weight="bold" fill="#b00020">ESTUDO PRELIMINAR DE EXERCÍCIO — NÃO VÁLIDO PARA FABRICAÇÃO/CONSTRUÇÃO</text>
+<text x="1068.0" y="734.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Cotas em m (referência fictícia do cliente); dimensões em m salvo indicação</text>
+<text x="1068.0" y="745.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Responsável técnico: a designar (ART obrigatória no executivo)</text>
+<text x="1368.0" y="702.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">DES-02</text>
+<text x="1368.0" y="715.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Escala: H 1:1250 / V 1:125 (exag. 10×)</text>
+<text x="1368.0" y="734.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Data: 26/11/2026</text>
+<text x="1368.0" y="745.0" font-size="9" text-anchor="start" font-weight="normal" fill="#111">Rev. 0 — emissão p/ estudo</text>
+<text x="1060.0" y="650.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#333">3) Pontos altos intermediários (ventosas) só podem ser identificados com levantamento topográfico.</text>
+<text x="1060.0" y="637.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#333">2) LP = linha piezométrica (energia), perdas com +10 % de segurança; trechos internos da casa: verba 2,5 m.</text>
+<text x="1060.0" y="624.0" font-size="9.5" text-anchor="start" font-weight="normal" fill="#333">Notas: 1) Perfil do terreno HIPOTÉTICO (interpolação linear entre cotas informadas).</text></svg>

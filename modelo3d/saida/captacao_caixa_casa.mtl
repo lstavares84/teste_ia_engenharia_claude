@@ -1,0 +1,59 @@
+newmtl terreno
+Kd 0.561 0.604 0.478
+d 1.0
+
+newmtl rio
+Kd 0.239 0.498 0.722
+d 0.35
+
+newmtl captacao
+Kd 0.780 0.490 0.180
+d 1.0
+
+newmtl tub_p1
+Kd 0.184 0.620 0.561
+d 1.0
+
+newmtl tub_casa
+Kd 0.541 0.310 0.749
+d 1.0
+
+newmtl drenagem
+Kd 0.420 0.498 0.588
+d 1.0
+
+newmtl estrutura
+Kd 0.365 0.420 0.478
+d 1.0
+
+newmtl acesso
+Kd 0.839 0.663 0.169
+d 1.0
+
+newmtl fundacao
+Kd 0.639 0.639 0.627
+d 1.0
+
+newmtl caixa
+Kd 0.812 0.847 0.890
+d 1.0
+
+newmtl equip
+Kd 0.820 0.286 0.357
+d 1.0
+
+newmtl civil
+Kd 0.702 0.667 0.612
+d 1.0
+
+newmtl eletrica
+Kd 0.941 0.541 0.141
+d 1.0
+
+newmtl casa
+Kd 0.725 0.659 0.561
+d 1.0
+
+newmtl zonas
+Kd 0.133 0.773 0.369
+d 0.35

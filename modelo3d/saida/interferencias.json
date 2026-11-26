@@ -1,0 +1,26 @@
+[
+ {
+  "a": "TB-102",
+  "b": "ZN-04",
+  "tipo": "zona livre obstruída",
+  "ponto": [
+   80.8,
+   1.404,
+   118.273
+  ],
+  "n": 2,
+  "tratamento": "Sequência de montagem: trecho horizontal da entrada sobre o teto — instalar após o içamento."
+ },
+ {
+  "a": "PT-01",
+  "b": "ZN-04",
+  "tipo": "zona livre obstruída",
+  "ponto": [
+   81.585,
+   0.548,
+   118.642
+  ],
+  "n": 4,
+  "tratamento": "Sequência de montagem: patamar superior entra no envelope de içamento — montar o patamar e a prumada N1 após posicionar e ancorar a caixa (ou torná-los desmontáveis)."
+ }
+]
